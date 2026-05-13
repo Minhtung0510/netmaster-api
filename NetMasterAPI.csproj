@@ -7,4 +7,10 @@
     <RootNamespace>NetMasterAPI</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="Data\curriculum.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

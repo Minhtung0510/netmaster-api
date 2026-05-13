@@ -1,0 +1,697 @@
+[
+  {
+    "id": "csharp-basics",
+    "title": "C# Cơ bản",
+    "chapter": "foundation",
+    "level": 1,
+    "overview": "Bài học giới thiệu các khái niệm nền tảng của ngôn ngữ C# bao gồm biến, kiểu dữ liệu, cấu trúc điều khiển, vòng lặp và phương thức. Đây là bước đầu tiên để bạn nắm vững lập trình C# và tiến xa hơn trong lộ trình Backend Developer.",
+    "theory": "Ngôn ngữ lập trình C# được Microsoft phát triển từ năm 2000, là ngôn ngữ mạnh mẽ, đa nền tảng và hướng đối tượng. C# được thiết kế dựa trên ngôn ngữ C++ và Java, kết hợp sức mạnh của C++ với sự đơn giản của Visual Basic. Từ phiên bản .NET 5 trở đi, C# chạy trên nền tảng cross-platform, có thể phát triển trên Windows, Linux và macOS.\n\n**Biến và Kiểu dữ liệu**\n\nBiến là vùng nhớ dùng để lưu trữ dữ liệu. Mỗi biến có một kiểu dữ liệu xác định loại giá trị mà nó có thể chứa. C# là ngôn ngữ statically typed — kiểu dữ liệu được kiểm tra tại thời điểm biên dịch, giúp phát hiện lỗi sớm và tối ưu hiệu suất.\n\nCác kiểu dữ liệu cơ bản gồm: int (số nguyên 32-bit), long (số nguyên 64-bit), double (số thực 64-bit), decimal (số thực độ chính xác cao cho tài chính), bool (true/false), char (một ký tự Unicode), string (chuỗi ký tự). Kiểu nullable (int?, bool?) cho phép biến chứa giá trị null.\n\n**Cấu trúc điều khiển**\n\nCấu trúc điều khiển cho phép chương trình rẽ nhánh hoặc lặp lại logic. If-else dùng để kiểm tra điều kiện và thực thi code khác nhau tùy kết quả. Switch-case so khớp một giá trị với nhiều trường hợp, có hỗ trợ pattern matching từ C# 8 trở đi. Toán tử ba ngôi (condition ? trueVal : falseVal) viết gọn cho if-else đơn giản.\n\n**Vòng lặp**\n\nVòng lặp for phù hợp khi biết trước số lần lặp. Vòng lặp while kiểm tra điều kiện trước mỗi lần lặp. Vòng lặp do-while luôn thực thi ít nhất một lần rồi mới kiểm tra điều kiện. Vòng lặp foreach duyệt qua từng phần tử của collection một cách an toàn, không cần quản lý chỉ số.\n\n**Phương thức (Method)**\n\nPhương thức là khối code có tên, có thể nhận tham số và trả về kết quả. C# hỗ trợ named arguments khi gọi phương thức giúp code dễ đọc, optional parameters với giá trị mặc định, và ref/out parameters để trả về nhiều giá trị. Từ C# 7, có thể dùng tuple để trả về nhiều giá trị. Local functions (C# 7+) cho phép khai báo hàm bên trong hàm khác.",
+    "codeExample": "using System;\n\nnamespace CSharpBasics\n{\n    class Program\n    {\n        static void Main(string[] args)\n        {\n            // BIẾN VÀ KIỂU DỮ LIỆU\n            int age = 25;\n            long population = 8_000_000_000L;\n            double price = 19.99;\n            decimal salary = 1000.50m;\n            float rate = 0.5f;\n            bool isActive = true;\n            char grade = 'A';\n            string name = \"C# Developer\";\n            int? optionalAge = null;\n\n            Console.WriteLine($\"Xin chào: {name}\");\n            Console.WriteLine($\"Tuổi: {age}, Lương: {salary:C}\");\n\n            // CẤU TRÚC ĐIỀU KHIỂN\n            if (age >= 18)\n                Console.WriteLine(\"Bạn là người trưởng thành.\");\n            else\n                Console.WriteLine(\"Bạn chưa đủ tuổi.\");\n\n            string status = age >= 18 ? \"Trưởng thành\" : \"Chưa trưởng thành\";\n\n            // VÒNG LẶP\n            for (int i = 1; i <= 10; i++)\n                Console.WriteLine($\"5 x {i} = {5 * i}\");\n\n            string[] fruits = { \"Táo\", \"Cam\", \"Chuối\" };\n            foreach (string fruit in fruits)\n                Console.WriteLine($\"  - {fruit}\");\n\n            // PHƯƠNG THỨC\n            int sum = Add(10, 20);\n            Console.WriteLine($\"Tổng 10 + 20 = {sum}\");\n        }\n\n        static int Add(int x, int y) => x + y;\n        static void Swap(ref int a, ref int b)\n        {\n            int temp = a; a = b; b = temp;\n        }\n    }\n}",
+    "exercises": [
+      "Viết chương trình nhập vào một số nguyên n, kiểm tra và in ra số đó là số chẵn hay số lẻ, chia hết cho 3 hay không.",
+      "Viết phương thức đệ quy tính dãy Fibonacci thứ n. Sau đó tối ưu bằng kỹ thuật memoization.",
+      "Viết chương trình in ra bảng cửu chương từ 1 đến 9 sử dụng vòng lặp lồng nhau, format đẹp theo cột."
+    ],
+    "keywords": [
+      "biến",
+      "kiểu dữ liệu",
+      "if-else",
+      "switch",
+      "vòng lặp",
+      "for/while/foreach",
+      "phương thức",
+      "ref/out parameter",
+      "tuple",
+      "lambda expression",
+      "nullable types"
+    ]
+  },
+  {
+    "id": "csharp-oop",
+    "title": "OOP trong C#",
+    "chapter": "foundation",
+    "level": 1,
+    "overview": "Lập trình hướng đối tượng (OOP) là paradigm quan trọng nhất trong C#. Bài học trình bày bốn trụ cột OOP: đóng gói (encapsulation), kế thừa (inheritance), đa hình (polymorphism) và trừu tượng (abstraction), cùng cách sử dụng class, interface và abstract class hiệu quả.",
+    "theory": "Lập trình hướng đối tượng (Object-Oriented Programming) là phương pháp tổ chức code thành các đối tượng, mỗi đối tượng là sự kết hợp giữa dữ liệu (fields/properties) và hành vi (methods). C# là ngôn ngữ OOP thuần túy, mọi thứ đều là đối tượng.\n\n**Class và Object**\n\nClass là bản thiết kế (blueprint) cho đối tượng, định nghĩa các thuộc tính và phương thức. Object là thực thể cụ thể được tạo ra từ class thông qua từ khóa new. Constructor là phương thức đặc biệt được gọi tự động khi tạo đối tượng.\n\n**Đóng gói (Encapsulation)**\n\nĐóng gói là che giấu chi tiết nội bộ của đối tượng, chỉ cung cấp giao diện công khai cần thiết. C# dùng access modifiers: public, private, protected, internal. Property với getter/setter là cách hiện đại để implement encapsulation.\n\n**Kế thừa (Inheritance)**\n\nKế thừa cho phép tạo class mới dựa trên class có sẵn, tái sử dụng code và thiết lập quan hệ IS-A. C# chỉ hỗ trợ single class inheritance nhưng hỗ trợ multiple interfaces. base keyword dùng để gọi constructor hoặc phương thức của class cha.\n\n**Đa hình (Polymorphism)**\n\nĐa hình cho phép đối tượng của class con được xử lý như đối tượng của class cha. Compile-time polymorphism (method overloading) và Runtime polymorphism (method overriding với virtual/override).\n\n**Trừu tượng (Abstraction)**\n\nTrừu tượng là ẩn đi chi tiết phức tạp, chỉ hiển thị những gì cần thiết. Abstract class và interface là hai cách implement abstraction. record (C# 9) là kiểu tham chiếu bất biến.",
+    "codeExample": "using System;\nusing System.Collections.Generic;\n\nnamespace CSharpOOP\n{\n    public class BankAccount\n    {\n        private decimal _balance;\n        public string AccountNumber { get; private set; }\n        public decimal Balance\n        {\n            get => _balance;\n            private set\n            {\n                if (value < 0)\n                    throw new ArgumentException(\"Số dư không thể âm.\");\n                _balance = value;\n            }\n        }\n\n        public BankAccount(string accountNumber, decimal initialBalance)\n        {\n            AccountNumber = accountNumber ?? throw new ArgumentNullException();\n            Balance = initialBalance;\n        }\n\n        public void Deposit(decimal amount)\n        {\n            if (amount <= 0) throw new ArgumentException(\"Số tiền phải > 0\");\n            Balance += amount;\n        }\n\n        public bool Withdraw(decimal amount)\n        {\n            if (amount > Balance) return false;\n            Balance -= amount;\n            return true;\n        }\n    }\n\n    public class Animal\n    {\n        public string Name { get; set; }\n        public virtual void Speak() => Console.WriteLine(\"...\");\n    }\n\n    public class Dog : Animal\n    {\n        public string Breed { get; set; }\n        public override void Speak() => Console.WriteLine(\"Gâu gâu!\");\n        public void Fetch() => Console.WriteLine($\"{Name} đang lấy bóng.\");\n    }\n\n    public interface IPayable { decimal CalculatePay(); }\n    public abstract class Employee\n    {\n        public string Name { get; set; }\n        public decimal BaseSalary { get; set; }\n        public abstract decimal CalculateAnnualBonus();\n    }\n\n    public record Person(string Name, int Age, string City);\n\n    class Program\n    {\n        static void Main()\n        {\n            var account = new BankAccount(\"ACC-001\", 1000m);\n            account.Deposit(500m);\n            Console.WriteLine($\"Số dư: {account.Balance:C}\");\n\n            var dog = new Dog { Name = \"Buddy\", Breed = \"Golden Retriever\" };\n            dog.Speak();\n            dog.Fetch();\n\n            var p1 = new Person(\"Lan\", 25, \"Hà Nội\");\n            var p2 = p1 with { Age = 26 };\n            Console.WriteLine($\"{p1.Name}, {p2.Age}\");\n        }\n    }\n}",
+    "exercises": [
+      "Thiết kế hệ thống quản lý hình học với abstract class Shape và các class con Circle, Rectangle, Triangle. Mỗi shape có method tính diện tích và chu vi.",
+      "Tạo interface IRepository<T> với các phương thức CRUD (Create, Read, Update, Delete, GetById). Implement generic class InMemoryRepository<T>.",
+      "Viết chương trình quản lý nhân viên với abstract class Employee, class con Developer và Manager. Implement polymorphism để tính lương khác nhau cho từng vai trò."
+    ],
+    "keywords": [
+      "class",
+      "object",
+      "constructor",
+      "encapsulation",
+      "access modifier",
+      "property",
+      "inheritance",
+      "base/this keyword",
+      "polymorphism",
+      "virtual/override",
+      "abstract class",
+      "interface",
+      "record",
+      "sealed class"
+    ]
+  },
+  {
+    "id": "csharp-generics-delegates",
+    "title": "Generics, Delegates & Events",
+    "chapter": "foundation",
+    "level": 1,
+    "overview": "Generics cho phép viết code có thể tái sử dụng với nhiều kiểu dữ liệu khác nhau mà không cần boxing/unboxing. Delegates là kiểu tham chiếu đại diện cho phương thức, nền tảng của event-driven programming. Events là cơ chế thông báo an toàn dựa trên delegates.",
+    "theory": "Generics, Delegates và Events là ba khái niệm nâng cao nhưng cực kỳ quan trọng trong C#, đặc biệt khi xây dựng các thư viện và framework backend.\n\n**Generics**\n\nGeneric cho phép định nghĩa class, interface, method hoạt động với kiểu dữ liệu được chỉ định khi sử dụng. Lợi ích: Type Safety, Performance (tránh boxing/unboxing), Code Reusability. Generic constraints giới hạn kiểu dữ liệu: where T : class, struct, new(), BaseClass, IInterface.\n\n**Delegates**\n\nDelegate là kiểu tham chiếu tương tự function pointer nhưng type-safe. Multicast delegate cho phép gọi nhiều phương thức cùng lúc qua += và -=. Built-in generic delegates: Func<T, TResult>, Action<T>, Predicate<T>.\n\n**Events**\n\nEvent là cơ chế thông báo cho phép một object báo hiệu cho các object khác. Event sử dụng delegate làm backing field nhưng chỉ cho phép thêm/bớt subscriber từ bên ngoài. EventHandler/EventHandler<T> là các delegate type chuẩn cho event.\n\n**Lambda Expressions**\n\nLambda expression là cách viết ngắn gọn cho anonymous method. Cú pháp: (parameters) => expression hoặc (parameters) => { statements; }.",
+    "codeExample": "using System;\nusing System.Collections.Generic;\nusing System.Linq;\n\nnamespace CSharpGenericsDelegatesEvents\n{\n    public class DataStore<T> where T : class, new()\n    {\n        private readonly List<T> _items = new List<T>();\n        public void Add(T item) => _items.Add(item);\n        public T Get(int index) => index >= 0 && index < _items.Count ? _items[index] : default;\n        public int Count => _items.Count;\n    }\n\n    public delegate int BinaryOperation(int a, int b);\n\n    public class Video { public string Title { get; set; } }\n\n    public class VideoEncoder\n    {\n        public event EventHandler<Video> VideoEncoded;\n        protected virtual void OnVideoEncoded(Video video)\n        {\n            VideoEncoded?.Invoke(this, video);\n        }\n        public void Encode(Video video)\n        {\n            Console.WriteLine($\"Mã hóa: {video.Title}\");\n            OnVideoEncoded(video);\n        }\n    }\n\n    class Program\n    {\n        static void Main()\n        {\n            var store = new DataStore<string>();\n            store.Add(\"Hello\");\n            store.Add(\"C# Generics\");\n            Console.WriteLine($\"Count: {store.Count}\");\n\n            BinaryOperation op = (a, b) => a + b;\n            Console.WriteLine($\"5 + 3 = {op(5, 3)}\");\n\n            Func<string, string, string> format = (f, l) => $\"{f} {l}\";\n            Console.WriteLine(format(\"Nguyễn\", \"Minh\"));\n\n            Action<string> print = msg => Console.WriteLine($\"[LOG] {msg}\");\n            print(\"Ứng dụng khởi động!\");\n\n\n            var encoder = new VideoEncoder();\n            encoder.VideoEncoded += (s, v) => Console.WriteLine($\"Video hoàn thành: {v.Title}\");\n            encoder.Encode(new Video { Title = \"Tutorial\" });\n        }\n    }\n}",
+    "exercises": [
+      "Viết generic class Stack<T> với các phương thức Push, Pop, Peek. Thêm property Count và IsEmpty. Đảm bảo thread-safety với lock.",
+      "Tạo hệ thống event cho class Stock với event PriceChanged. Khi giá thay đổi, thông báo cho tất cả subscribers.",
+      "Viết phương thức generic để deep copy một object bằng serialization, áp dụng constraint where T : class, new()."
+    ],
+    "keywords": [
+      "generics",
+      "generic class",
+      "generic method",
+      "where constraint",
+      "delegate",
+      "multicast delegate",
+      "Func",
+      "Action",
+      "Predicate",
+      "event",
+      "event handler",
+      "EventArgs",
+      "lambda expression",
+      "IComparable"
+    ]
+  },
+  {
+    "id": "csharp-linq-collections",
+    "title": "LINQ & Collections",
+    "chapter": "foundation",
+    "level": 1,
+    "overview": "LINQ (Language Integrated Query) là ngôn ngữ truy vấn tích hợp trong C#, cho phép truy vấn dữ liệu từ nhiều nguồn một cách nhất quán. Collections cung cấp cấu trúc dữ liệu đa dạng phục vụ lưu trữ và thao tác dữ liệu trong bộ nhớ.",
+    "theory": "LINQ và Collections là hai phần không thể tách rời khi làm việc với dữ liệu trong C#. LINQ mang lại cú pháp truy vấn mạnh mẽ, đọc ngôn ngữ tự nhiên.\n\n**IEnumerable vs IQueryable**\n\nIEnumerable phù hợp cho collections trong bộ nhớ, thực thi ngay lập tức. IQueryable phù hợp cho database queries, sử dụng Expression Trees. Khi làm việc với Entity Framework, dùng IQueryable để truy vấn được dịch sang SQL.\n\n**Deferred Execution**\n\nHầu hết LINQ operators không thực thi ngay — chúng tạo Expression Tree và chỉ thực thi khi duyệt kết quả. Immediate execution xảy ra khi gọi ToList(), ToArray(), First(), Count().\n\n**Query Syntax vs Method Syntax**\n\nQuery Syntax dùng từ khóa from, where, orderby, select (giống SQL). Method Syntax dùng chain các extension methods (Where, Select, OrderBy). Hai cách tương đương về hiệu năng.\n\n**Collections quan trọng**\n\nList<T> là collection động, truy cập theo chỉ mục O(1). Dictionary<TKey, TValue> là hash table, tra cứu O(1). HashSet<T> là tập hợp không trùng lặp. Queue<T> và Stack<T> cho FIFO và LIFO.\n\n**Yield return**\n\nyield return tạo iterator method trả về IEnumerable mà không cần tạo collection đầy đủ, tiết kiệm memory.",
+    "codeExample": "using System;\nusing System.Collections.Generic;\nusing System.Linq;\n\nnamespace CSharpLINQCollections\n{\n    public class Product\n    {\n        public int Id { get; set; }\n        public string Name { get; set; }\n        public decimal Price { get; set; }\n        public int Stock { get; set; }\n    }\n\n    class Program\n    {\n        static void Main()\n        {\n            var numbers = new List<int> { 5, 3, 8, 1, 9, 2 };\n            numbers.Sort();\n            Console.WriteLine(string.Join(\", \", numbers));\n\n            var prices = new Dictionary<string, decimal>\n            {\n                [\"Táo\"] = 15000,\n                [\"Cam\"] = 20000\n            };\n            Console.WriteLine($\"Giá Cam: {prices[\"Cam\"]:C}\");\n\n            var evens = numbers.Where(n => n % 2 == 0);\n            Console.WriteLine($\"Số chẵn: {string.Join(\", \", evens)}\");\n\n            var sorted = numbers.OrderByDescending(n => n);\n            Console.WriteLine($\"Giảm dần: {string.Join(\", \", sorted.Take(3))}\");\n\n            var products = new List<Product>\n            {\n                new() { Id = 1, Name = \"Laptop\", Price = 20000000, Stock = 10 },\n                new() { Id = 2, Name = \"Chuột\", Price = 200000, Stock = 50 }\n            };\n\n            var byCategory = products.GroupBy(p => p.Name);\n            foreach (var group in byCategory)\n                Console.WriteLine($\"{group.Key}: {group.Count()} sản phẩm\");\n\n            bool hasExpensive = products.Any(p => p.Price > 10000000);\n            Console.WriteLine($\"Có sản phẩm >10M? {hasExpensive}\");\n\n            foreach (var fib in Fibonacci(10))\n                Console.Write($\" {fib}\");\n            Console.WriteLine();\n        }\n\n        static IEnumerable<int> Fibonacci(int count)\n        {\n            int prev = 0, curr = 1;\n            for (int i = 0; i < count; i++)\n            {\n                yield return prev;\n                (prev, curr) = (curr, prev + curr);\n            }\n        }\n    }\n}",
+    "exercises": [
+      "Tạo danh sách 20 sinh viên với tên, tuổi, điểm, lớp. Viết LINQ query lọc sinh viên xuất sắc (GPA >= 8.0), nhóm theo lớp, sắp xếp giảm dần theo GPA, phân trang.",
+      "Viết phương thức mở rộng DistinctBy<T, TKey> dùng IEqualityComparer để loại bỏ trùng lặp theo một thuộc tính.",
+      "Tạo class ShoppingCart chứa List<OrderItem>. Viết LINQ query tính tổng tiền, áp dụng giảm giá 10% cho đơn hàng trên 1 triệu."
+    ],
+    "keywords": [
+      "LINQ",
+      "IEnumerable",
+      "IQueryable",
+      "deferred execution",
+      "immediate execution",
+      "Where",
+      "Select",
+      "OrderBy",
+      "GroupBy",
+      "Join",
+      "Any",
+      "All",
+      "Contains",
+      "List<T>",
+      "Dictionary<TKey, TValue>",
+      "HashSet<T>",
+      "yield return"
+    ]
+  },
+  {
+    "id": "csharp-async-await",
+    "title": "Async / Await & Task",
+    "chapter": "foundation",
+    "level": 1,
+    "overview": "Async/Await là cơ chế lập trình bất đồng bộ giúp ứng dụng C# xử lý các tác vụ tốn thời gian (I/O-bound) mà không chặn luồng chính. Task và Task<T> là nền tảng của async programming.",
+    "theory": "Lập trình bất đồng bộ (asynchronous programming) là kỹ thuật thiết yếu để xây dựng ứng dụng responsive và scalable.\n\n**Tại sao cần Async?**\n\nTrong ứng dụng đồng bộ, khi gặp tác vụ I/O (đọc file, gọi API), luồng bị blocking. Với async/await, luồng được giải phóng để làm việc khác, tối ưu throughput.\n\n**Task và Task<T>**\n\nTask đại diện cho một tác vụ bất đồng bộ. Task<T> là Task trả về giá trị kiểu T. Task có các trạng thái: Created, Running, RanToCompletion, Faulted, Canceled.\n\n**Async/Await Pattern**\n\nPhương thức async phải trả về Task, Task<T>. Từ khóa await tạm dừng phương thức async, trả luồng về caller, sau đó tiếp tục khi Task hoàn thành.\n\n**ConfigureAwait**\n\nConfigureAwait(false) yêu cầu không cần resume trên synchronization context ban đầu, cải thiện hiệu năng trong thư viện.\n\n**Exception Handling**\n\nExceptions trong async methods được gói trong Task và chỉ được ném khi Task được await. Task.WhenAll chờ nhiều tasks, throw AggregateException khi có lỗi.",
+    "codeExample": "using System;\nusing System.Collections.Generic;\nusing System.Net.Http;\nusing System.Threading;\nusing System.Threading.Tasks;\n\nnamespace CSharpAsyncAwait\n{\n    public class AsyncService\n    {\n        private readonly HttpClient _httpClient = new HttpClient();\n\n        public async Task<string> FetchDataAsync(string url)\n        {\n            return await _httpClient.GetStringAsync(url);\n        }\n\n        public async Task<string> FetchWithCancel(string url, CancellationToken ct)\n        {\n            var response = await _httpClient.GetAsync(url, ct);\n            return await response.Content.ReadAsStringAsync(ct);\n        }\n\n        public async Task<List<string>> FetchAllAsync(string[] urls)\n        {\n            var tasks = urls.Select(url => _httpClient.GetStringAsync(url));\n            string[] results = await Task.WhenAll(tasks);\n            return new List<string>(results);\n        }\n    }\n\n    class Program\n    {\n        static async Task Main(string[] args)\n        {\n            var service = new AsyncService();\n\n            var task1 = Task.Delay(50);\n            var task2 = Task.Delay(50);\n            await Task.WhenAll(task1, task2);\n            Console.WriteLine(\"Hoàn thành sau ~50ms\");\n\n            using var cts = new CancellationTokenSource();\n            cts.CancelAfter(100);\n            try\n            {\n                await Task.Delay(500, cts.Token);\n            }\n            catch (TaskCanceledException)\n            {\n                Console.WriteLine(\"Operation bị hủy!\");\n            }\n\n            try\n            {\n                await ThrowAsync();\n            }\n            catch (InvalidOperationException ex)\n            {\n                Console.WriteLine($\"Bắt được: {ex.Message}\");\n            }\n        }\n\n        static async Task ThrowAsync()\n        {\n            await Task.Delay(10);\n            throw new InvalidOperationException(\"Lỗi xảy ra!\");\n        }\n    }\n}",
+    "exercises": [
+      "Viết ứng dụng tải đồng thời 10 trang web bằng HttpClient. Dùng Task.WhenAll để chạy song song, đo thời gian và so sánh với tuần tự.",
+      "Tạo class RateLimiter dùng SemaphoreSlim giới hạn số lượng request API đồng thời. Implement interface IRateLimiter với phương thức async WaitAsync().",
+      "Viết pipeline xử lý ảnh bất đồng bộ với các bước: Download -> Resize -> ApplyFilter -> Save. Mỗi bước có thể thất bại, dùng retry logic."
+    ],
+    "keywords": [
+      "async/await",
+      "Task",
+      "Task<T>",
+      "ValueTask",
+      "CancellationToken",
+      "Task.Run",
+      "Task.WhenAll",
+      "Task.WhenAny",
+      "ConfigureAwait",
+      "SemaphoreSlim",
+      "AggregateException",
+      "state machine",
+      "thread pool"
+    ]
+  },
+  {
+    "id": "dotnet-ecosystem-nuget",
+    "title": ".NET Ecosystem & NuGet Packages",
+    "chapter": "foundation",
+    "level": 1,
+    "overview": "Nền tảng .NET là hệ sinh thái phong phú với hàng nghìn NuGet packages. Bài học giúp bạn hiểu cấu trúc .NET (CLR, BCL, SDK), quản lý dependencies bằng NuGet, và làm quen với các packages phổ biến trong phát triển Backend.",
+    "theory": ".NET là nền tảng phát triển của Microsoft, từ .NET Core (2016) và .NET 5 trở đi, .NET trở thành cross-platform, open-source.\n\n**Kiến trúc .NET**\n\n.NET Runtime (CLR) thực thi managed code, quản lý bộ nhớ qua Garbage Collector. BCL (Base Class Library) cung cấp các types cơ bản: System.String, System.Collections, System.IO, System.Net.Http, System.Linq.\n\n**NuGet Package Manager**\n\nNuGet là package manager cho .NET, tương tự npm cho JavaScript. File .csproj chứa <PackageReference> cho mỗi dependency.\n\n**Semantic Versioning (SemVer)**\n\nVersion format: Major.Minor.Patch[-Prerelease]. Major — breaking changes. Minor — tính năng mới, backward compatible. Patch — bug fixes.\n\n**Packages quan trọng cho Backend**\n\nSerialization: System.Text.Json (built-in), Newtonsoft.Json. HTTP: HttpClient, RestSharp, Flurl. Logging: Microsoft.Extensions.Logging, Serilog. Testing: xUnit, NUnit, Moq. ORM: Entity Framework Core, Dapper. Background Jobs: Hangfire, Quartz.NET.",
+    "codeExample": "using System;\nusing System.Text.Json;\nusing Microsoft.Extensions.DependencyInjection;\nusing Microsoft.Extensions.Logging;\n\nnamespace DotNetEcosystem\n{\n    public class Product { public int Id { get; set; } public string Name { get; set; } public decimal Price { get; set; } }\n\n    public interface IProductService { List<Product> GetAll(); }\n\n    public class ProductService : IProductService\n    {\n        private readonly List<Product> _products = new()\n        {\n            new() { Id = 1, Name = \"Laptop\", Price = 20000000 },\n            new() { Id = 2, Name = \"Chuột\", Price = 200000 }\n        };\n        public List<Product> GetAll() => _products;\n    }\n\n    class Program\n    {\n        static void Main()\n        {\n            var product = new Product { Id = 1, Name = \"Laptop\", Price = 20000000 };\n            var json = JsonSerializer.Serialize(product);\n            Console.WriteLine($\"JSON: {json}\");\n\n            var services = new ServiceCollection();\n            services.AddLogging(builder => builder.AddConsole());\n            services.AddScoped<IProductService, ProductService>();\n            using var provider = services.BuildServiceProvider();\n\n            using var scope = provider.CreateScope();\n            var productService = scope.ServiceProvider.GetRequiredService<IProductService>();\n            foreach (var p in productService.GetAll())\n                Console.WriteLine($\"{p.Name}: {p.Price:C}\");\n        }\n    }\n}",
+    "exercises": [
+      "Tạo một class Library với 3 services. Dùng Microsoft.Extensions.DependencyInjection đăng ký và resolve chúng.",
+      "Viết console app gọi một public API. Dùng Polly với retry 3 lần, circuit breaker, và timeout 5 giây.",
+      "Tạo solution có 3 projects: shared library, console app, và web API. Dùng NuGet Central Package Management (.NET 7+)."
+    ],
+    "keywords": [
+      ".NET SDK",
+      "CLR",
+      "BCL",
+      "NuGet",
+      "PackageReference",
+      "SemVer",
+      "Microsoft.Extensions.DependencyInjection",
+      "Serilog",
+      "FluentValidation",
+      "Polly",
+      "cross-platform",
+      "LTS",
+      "netstandard",
+      "target framework"
+    ]
+  },
+  {
+    "id": "aspnet-core-architecture",
+    "title": "ASP.NET Core (Architecture, Request Pipeline, Program.js)",
+    "chapter": "web-backend",
+    "level": 2,
+    "overview": "ASP.NET Core là framework web cross-platform của Microsoft, nền tảng để xây dựng REST API, web apps, và microservices. Bài học giúp bạn hiểu kiến trúc tổng thể, request pipeline, và cách cấu hình ứng dụng qua Program.js.",
+    "theory": "ASP.NET Core là framework web thế hệ mới, được viết lại hoàn toàn từ .NET Framework, cross-platform và performance cao hơn nhiều.\n\n**Kiến trúc Minimal Hosting**\n\nTừ .NET 6, ASP.NET Core dùng minimal hosting model — không cần Startup.cs, mọi thứ cấu hình trong Program.cs. Host builder tổng hợp WebApplication, Kestrel server, DI container, logging, và configuration.\n\n**Request Pipeline**\n\nMỗi HTTP request đi qua một chuỗi middleware theo thứ tự đăng ký. Middleware là một component nhận HttpContext, thực thi logic, và gọi middleware tiếp theo hoặc short-circuit. use() cho phép short-circuit hoặc continue. Map() và MapWhen() branch pipeline dựa trên URL path.\n\n**Kestrel Web Server**\n\nKestrel là cross-platform web server tích hợp sẵn. Có thể chạy standalone hoặc behind reverse proxy (IIS, Nginx).\n\n**Configuration**\n\n.NET 6+ dùng IConfiguration và IOptions<T>. Cấu hình đọc từ: appsettings.json, environment variables, command-line arguments, secrets.",
+    "codeExample": "var builder = WebApplication.CreateBuilder(args);\n\nbuilder.Services.AddControllers();\nbuilder.Services.AddEndpointsApiExplorer();\nbuilder.Services.AddSwaggerGen();\nbuilder.Services.AddCors(options =>\n{\n    options.AddPolicy(\"AllowFrontend\", policy =>\n    {\n        policy.WithOrigins(\"http://localhost:3000\")\n              .AllowAnyHeader()\n              .AllowAnyMethod();\n    });\n});\n\nbuilder.Services.AddScoped<IProductRepository, ProductRepository>();\n\nbuilder.WebHost.ConfigureKestrel(options =>\n{\n    options.Limits.MaxConcurrentConnections = 100;\n    options.Limits.MaxRequestBodySize = 10 * 1024 * 1024;\n    options.ListenAnyIP(5000);\n});\n\nvar app = builder.Build();\n\nif (app.Environment.IsDevelopment())\n{\n    app.UseSwagger();\n    app.UseSwaggerUI();\n}\n\napp.UseExceptionHandler(errorApp =>\n{\n    errorApp.Run(async context =>\n    {\n        context.Response.StatusCode = 500;\n        context.Response.ContentType = \"application/json\";\n        await context.Response.WriteAsJsonAsync(new { error = \"Internal error\" });\n    });\n});\n\napp.UseCors(\"AllowFrontend\");\napp.UseRouting();\napp.MapControllers();\napp.Run();\n\npublic class RequestLoggingMiddleware\n{\n    private readonly RequestDelegate _next;\n    public async Task InvokeAsync(HttpContext context)\n    {\n        var sw = System.Diagnostics.Stopwatch.StartNew();\n        await _next(context);\n        sw.Stop();\n        context.Response.Headers[\"X-Response-Time\"] = sw.ElapsedMilliseconds + \"ms\";\n    }\n}",
+    "exercises": [
+      "Tạo ASP.NET Core Web API project. Cấu hình 3 middleware tùy chỉnh: (1) ghi log mỗi request, (2) thêm header X-Request-Id, (3) short-circuit với 503 nếu maintenance mode bật.",
+      "Xây dựng middleware pipeline với 5 endpoints với auth và authorization tách riêng.",
+      "Cấu hình ASP.NET Core đọc từ appsettings.json, environment variables, và command-line args. Tạo typed configuration class."
+    ],
+    "keywords": [
+      "ASP.NET Core",
+      "WebApplication",
+      "middleware",
+      "request pipeline",
+      "Kestrel",
+      "Use/Run/Map",
+      "dependency injection",
+      "IConfiguration",
+      "IOptions<T>",
+      "Program.js",
+      "minimal hosting",
+      "environment"
+    ]
+  },
+  {
+    "id": "rest-api-design",
+    "title": "REST API Design",
+    "chapter": "web-backend",
+    "level": 2,
+    "overview": "REST (Representational State Transfer) là kiểu kiến trúc API phổ biến nhất hiện nay. Bài học trình bày các nguyên tắc REST, thiết kế endpoint nhất quán, sử dụng HTTP verbs và status codes đúng cách.",
+    "theory": "REST (Representational State Transfer) là kiểu kiến trúc do Roy Fielding định nghĩa năm 2000, dựa trên HTTP. REST không phải chuẩn bắt buộc mà là tập hợp ràng buộc và nguyên tắc thiết kế.\n\n**6 nguyên tắc REST**\n\n1. Client-Server Architecture: Client và Server độc lập. 2. Stateless: Mỗi request phải chứa đủ thông tin để server xử lý. 3. Cacheable: Responses có thể được cache. 4. Uniform Interface: Tài nguyên được định danh bằng URI. 5. Layered System: Có thể đặt load balancer, CDN giữa client và server. 6. Code on Demand (tùy chọn).\n\n**HTTP Methods**\n\nGET: Lấy resource (idempotent, cacheable). POST: Tạo resource mới (không idempotent). PUT: Thay thế toàn bộ resource (idempotent). PATCH: Cập nhật một phần (không idempotent). DELETE: Xóa resource (idempotent).\n\n**HTTP Status Codes**\n\n2xx — Success: 200 OK, 201 Created, 204 No Content. 4xx — Client Error: 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 429 Too Many Requests. 5xx — Server Error: 500 Internal Server Error, 503 Service Unavailable.\n\n**Endpoint Naming**\n\nDùng danh từ số nhiều: /users, /products. Nested resources: /users/123/orders. Không dùng động từ trong endpoint.",
+    "codeExample": "using System;\nusing System.Collections.Generic;\n\nnamespace RESTApiDesign\n{\n    public class UserResponse { public int Id { get; set; } public string Name { get; set; } public string Email { get; set; } }\n\n    public class PaginatedResult<T>\n    {\n        public List<T> Items { get; set; }\n        public int TotalCount { get; set; }\n        public int Page { get; set; }\n        public int PageSize { get; set; }\n        public int TotalPages => (int)Math.Ceiling(TotalCount / (double)PageSize);\n        public bool HasPrevious => Page > 1;\n        public bool HasNext => Page < TotalPages;\n    }\n\n    public class ApiResponse<T>\n    {\n        public bool Success { get; set; }\n        public T? Data { get; set; }\n        public string? Message { get; set; }\n        public List<string> Errors { get; set; } = new();\n\n        public static ApiResponse<T> Ok(T data) => new() { Success = true, Data = data };\n        public static ApiResponse<T> Fail(string error) => new() { Success = false, Errors = new List<string> { error } };\n    }\n\n    class Program\n    {\n        static void Main()\n        {\n            Console.WriteLine(\"=== REST API ENDPOINT MAP ===\");\n            Console.WriteLine(\"GET    /api/v1/users              — List users\");\n            Console.WriteLine(\"POST   /api/v1/users              — Create user\");\n            Console.WriteLine(\"GET    /api/v1/users/{id}         — Get user\");\n            Console.WriteLine(\"PUT    /api/v1/users/{id}         — Replace user\");\n            Console.WriteLine(\"PATCH  /api/v1/users/{id}         — Partial update\");\n            Console.WriteLine(\"DELETE /api/v1/users/{id}         — Delete user\");\n            Console.WriteLine();\n            Console.WriteLine(\"Query params: ?page=1&pageSize=20&sort=name:asc&filter[status]=active\");\n        }\n    }\n}",
+    "exercises": [
+      "Thiết kế API cho hệ thống quản lý thư viện sách. Xác định resources, endpoints, HTTP methods, và status codes.",
+      "Triển khai API versioning với 2 versions (v1 và v2) dùng URL path versioning.",
+      "Viết ApiResponse wrapper với Generics hỗ trợ success/fail response, pagination, và validation errors."
+    ],
+    "keywords": [
+      "REST",
+      "RESTful",
+      "HTTP methods",
+      "HTTP status codes",
+      "endpoint naming",
+      "idempotent",
+      "pagination",
+      "filtering",
+      "sorting",
+      "API versioning",
+      "HATEOAS",
+      "stateless",
+      "Cache-Control"
+    ]
+  },
+  {
+    "id": "routing-controllers-actionresults",
+    "title": "Routing & Controllers & Action Results",
+    "chapter": "web-backend",
+    "level": 2,
+    "overview": "Routing ánh xạ HTTP requests đến đúng controller và action. Controller xử lý logic và trả về Action Results. Bài học trình bày attribute routing, conventional routing, model binding, và cách trả về các loại Action Result phù hợp.",
+    "theory": "ASP.NET Core cung cấp hai hệ thống routing: Conventional Routing (pattern-based) và Attribute Routing (định nghĩa route trực tiếp trên controller/action).\n\n**Attribute Routing**\n\nAttribute Routing là approach phổ biến trong Web API vì tính explicit và flexible. Route attribute đặt trên controller định nghĩa route prefix. HttpGet/HttpPost/etc. đặt trên action định nghĩa route cụ thể. Route constraints giới hạn kiểu tham số: {id:int}, {name:alpha}.\n\n**Model Binding**\n\nModel Binding tự động chuyển đổi HTTP request data (query strings, route values, form data, JSON body) thành .NET objects. BindAttribute với: BindRequired, FromQuery, FromRoute, FromBody, FromForm, FromHeader.\n\n**Action Results**\n\nIActionResult là interface cho mọi action result. Helper methods: Ok(), BadRequest(), NotFound(), Created(), NoContent(), StatusCode(). ProblemDetails (RFC 7807) chuẩn format cho error responses.\n\n**Content Negotiation**\n\nAPI có thể trả về formats khác nhau (JSON, XML) dựa trên Accept header.",
+    "codeExample": "using System;\nusing System.Collections.Generic;\nusing System.ComponentModel.DataAnnotations;\nusing Microsoft.AspNetCore.Mvc;\n\nnamespace RoutingControllersActionResults\n{\n    public class CreateProductRequest\n    {\n        [Required(ErrorMessage = \"Tên bắt buộc\")]\n        [StringLength(100, MinimumLength = 2)]\n        public string Name { get; set; }\n\n        [Range(0.01, 1000000)]\n        public decimal Price { get; set; }\n\n        [FromQuery(Name = \"category_id\")]\n        public int? CategoryId { get; set; }\n    }\n\n    [ApiController]\n    [Route(\"api/[controller]\")]\n    public class ProductsController : ControllerBase\n    {\n        private static readonly List<object> _products = new();\n\n        [HttpGet]\n        public ActionResult GetAll([FromQuery] int page = 1, [FromQuery] int pageSize = 10)\n        {\n            return Ok(new { products = _products, page, pageSize });\n        }\n\n        [HttpGet(\"{id:int}\")]\n        public ActionResult GetById(int id)\n        {\n            if (id <= 0) return BadRequest(new { error = \"ID không hợp lệ\" });\n            return Ok(new { id, name = \"Product \" + id });\n        }\n\n        [HttpPost]\n        public ActionResult Create([FromBody] CreateProductRequest request)\n        {\n            if (!ModelState.IsValid)\n                return UnprocessableEntity(ModelState);\n\n            var newProduct = new { id = _products.Count + 1, request.Name, request.Price };\n            _products.Add(newProduct);\n            return CreatedAtAction(nameof(GetById), new { id = newProduct.id }, newProduct);\n        }\n\n        [HttpDelete(\"{id:int}\")]\n        public ActionResult Delete(int id)\n        {\n            return NoContent();\n        }\n    }\n\n    class Program\n    {\n        static void Main()\n        {\n            Console.WriteLine(\"=== ROUTING, CONTROLLERS & ACTION RESULTS ===\");\n            Console.WriteLine(\"GET    api/products                    — List all\");\n            Console.WriteLine(\"GET    api/products/{id:int}          — Get by ID\");\n            Console.WriteLine(\"POST   api/products                   — Create\");\n            Console.WriteLine(\"DELETE api/products/{id}             — Delete\");\n        }\n    }\n}",
+    "exercises": [
+      "Tạo ProductsController với CRUD đầy đủ: GET (list + pagination), GET by id, POST, PUT, PATCH, DELETE. Validate request với Data Annotations.",
+      "Implement soft delete pattern: DELETE endpoint không xóa thật mà đặt IsDeleted=true. Thêm GetDeleted endpoint và Restore endpoint.",
+      "Viết custom route constraint kiểm tra id có tồn tại trong database trước khi routing tới action."
+    ],
+    "keywords": [
+      "attribute routing",
+      "conventional routing",
+      "model binding",
+      "FromQuery",
+      "FromRoute",
+      "FromBody",
+      "IActionResult",
+      "ActionResult<T>",
+      "ApiController",
+      "ProducesResponseType",
+      "status codes",
+      "Content Negotiation"
+    ]
+  },
+  {
+    "id": "middleware-pipeline-filters",
+    "title": "Middleware Pipeline & Filters",
+    "chapter": "web-backend",
+    "level": 2,
+    "overview": "Middleware là các component xử lý request/response trong pipeline. Filter (Action Filter, Authorization Filter, Exception Filter) là các aspect-oriented extension points trong MVC pipeline. Hiểu rõ sự khác nhau và cách phối hợp giữa middleware và filter là chìa khóa để xây dựng ứng dụng ASP.NET Core linh hoạt.",
+    "theory": "Middleware và Filters đều là các component trong request processing pipeline, nhưng hoạt động ở các mức khác nhau.\n\n**Middleware**\n\nMiddleware xử lý mọi HTTP requests, hoạt động ở mức HTTP layer. Đặt trong Program.cs, áp dụng cho toàn bộ application. Dùng cho: Authentication, CORS, Logging, Exception handling, Static files. Middleware có thể short-circuit (dừng pipeline, không gọi next).\n\n**Filters**\n\nFilters chỉ áp dụng cho MVC/Page pipeline, hoạt động ở mức Action/C# layer. Các loại Filters: Authorization Filters, Resource Filters, Action Filters, Exception Filters, Result Filters.\n\n**Exception Handling Strategy**\n\n3 cách xử lý exception: 1) UseExceptionHandler() middleware. 2) Exception Filter (IExceptionFilter). 3) try-catch trong action.\n\n**Filter Scopes và Order**\n\nFilter có 3 scopes: Action, Controller, Global. Thứ tự: Global filters -> Controller filters -> Action filters.",
+    "codeExample": "using System;\nusing System.Threading.Tasks;\nusing Microsoft.AspNetCore.Builder;\nusing Microsoft.AspNetCore.Http;\nusing Microsoft.AspNetCore.Mvc.Filters;\n\nnamespace MiddlewareFiltersPipeline\n{\n    public class RateLimitingMiddleware\n    {\n        private readonly RequestDelegate _next;\n        private int _requestCount = 0;\n\n        public RateLimitingMiddleware(RequestDelegate next) => _next = next;\n\n        public async Task InvokeAsync(HttpContext context)\n        {\n            if (++_requestCount > 100)\n            {\n                context.Response.StatusCode = 429;\n                await context.Response.WriteAsJsonAsync(new { error = \"Too Many Requests\" });\n                return;\n            }\n            await _next(context);\n        }\n    }\n\n    public class TimingActionFilter : IAsyncActionFilter\n    {\n        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)\n        {\n            var sw = System.Diagnostics.Stopwatch.StartNew();\n            Console.WriteLine($\"Action started: {context.ActionDescriptor.DisplayName}\");\n            var result = await next();\n            sw.Stop();\n            Console.WriteLine($\"Action completed in {sw.ElapsedMilliseconds}ms\");\n        }\n    }\n\n    public class GlobalExceptionFilter : IExceptionFilter\n    {\n        public void OnException(ExceptionContext context)\n        {\n            context.Result = new ObjectResult(new\n            {\n                code = \"INTERNAL_ERROR\",\n                message = context.Exception.Message\n            }) { StatusCode = 500 };\n        }\n    }\n\n    public class Configure\n    {\n        public static void ConfigureMiddleware(WebApplication app)\n        {\n            app.UseExceptionHandler(\"/error\");\n            app.UseCorrelationId();\n            app.UseRateLimiting();\n            app.UseRouting();\n            app.MapControllers();\n        }\n    }\n\n    class Program\n    {\n        static void Main()\n        {\n            Console.WriteLine(\"Middleware Pipeline Order:\");\n            Console.WriteLine(\"  1. ExceptionHandler\");\n            Console.WriteLine(\"  2. StaticFiles\");\n            Console.WriteLine(\"  3. CorrelationId\");\n            Console.WriteLine(\"  4. RateLimiting\");\n            Console.WriteLine(\"  5. Authentication\");\n            Console.WriteLine(\"  6. CORS\");\n            Console.WriteLine(\"  7. Routing\");\n            Console.WriteLine(\"  8. MapControllers\");\n        }\n    }\n}",
+    "exercises": [
+      "Viết Rate Limiting Middleware dùng sliding window algorithm. Trả về 429 Too Many Requests khi vượt giới hạn.",
+      "Tạo AuditLogFilter ghi lại mọi action: ai thực hiện, action nào, parameters, kết quả, thời gian.",
+      "Implement caching với Resource Filter: kiểm tra Cache-Control header, trả về cached response nếu có."
+    ],
+    "keywords": [
+      "middleware",
+      "filter",
+      "IActionFilter",
+      "IExceptionFilter",
+      "IAuthorizationFilter",
+      "IResultFilter",
+      "IResourceFilter",
+      "short-circuit",
+      "pipeline order",
+      "Use/Map/Run",
+      "TypeFilter",
+      "ServiceFilter",
+      "Attribute filter"
+    ]
+  },
+  {
+    "id": "dependency-injection-lifetimes",
+    "title": "Dependency Injection (Singleton/Scoped/Transient)",
+    "chapter": "web-backend",
+    "level": 2,
+    "overview": "Dependency Injection (DI) là kỹ thuật quản lý dependencies, giúp code loosely coupled, testable và maintainable. ASP.NET Core có DI container tích hợp sẵn. Bài học giải thích 3 lifetime options, cách đăng ký services, và các pitfalls phổ biến cần tránh.",
+    "theory": "Dependency Injection là pattern trong đó một object nhận các dependencies của nó từ bên ngoài thay vì tự tạo. DI container tự động resolve dependencies, quản lý lifetime, và dispose objects.\n\n**3 Service Lifetimes**\n\n\n1. Singleton: Một instance duy nhất cho toàn bộ application lifetime. Dùng cho: services không giữ state, configuration, logging, cache.\n\n2. Scoped: Một instance mới cho mỗi HTTP request. Dùng cho: DbContext, services cần consistent state trong một request.\n\n3. Transient: Instance mới được tạo mỗi khi được request. Dùng cho: lightweight stateless services, factory-style services.\n\n**Service Registration Methods**\n\nAddSingleton<TService, TImplementation>(), AddScoped(), AddTransient(). TryAdd*() chỉ đăng ký nếu chưa có.\n\n**Common Pitfalls**\n\n1. Captive Dependency: Đăng ký scoped service như singleton. 2. Capturing in closures: Không capture scoped/transient services trong singleton. 3. DbContext as Singleton: KHÔNG BAO GIỜ đăng ký DbContext là singleton.",
+    "codeExample": "using System;\nusing Microsoft.Extensions.DependencyInjection;\n\nnamespace DependencyInjectionLifetimes\n{\n    public interface IProductService { int GetInstanceId(); }\n\n    public class SingletonService : IProductService\n    {\n        private readonly int _instanceId = new Random().Next(1000, 9999);\n        public int GetInstanceId() => _instanceId;\n        public SingletonService() => Console.WriteLine($\"[Singleton] Instance: {_instanceId}\");\n    }\n\n    public class ScopedService : IProductService\n    {\n        private readonly int _instanceId = new Random().Next(1000, 9999);\n        public int GetInstanceId() => _instanceId;\n        public ScopedService() => Console.WriteLine($\"[Scoped] Instance: {_instanceId}\");\n    }\n\n    public class TransientService : IProductService\n    {\n        private readonly int _instanceId = new Random().Next(1000, 9999);\n        public int GetInstanceId() => _instanceId;\n        public TransientService() => Console.WriteLine($\"[Transient] Instance: {_instanceId}\");\n    }\n\n    class Program\n    {\n        static void Main()\n        {\n            var services = new ServiceCollection();\n            services.AddSingleton<IProductService, SingletonService>();\n            services.AddScoped<IProductService, ScopedService>();\n            services.AddTransient<IProductService, TransientService>();\n\n            var provider = services.BuildServiceProvider();\n\n            Console.WriteLine(\"\\n--- REQUEST 1 ---\");\n            using (var scope = provider.CreateScope())\n            {\n                var s1 = scope.ServiceProvider.GetRequiredService<IProductService>();\n                var s2 = scope.ServiceProvider.GetRequiredService<IProductService>();\n                Console.WriteLine($\"Singleton same? {s1.GetInstanceId() == s2.GetInstanceId()}\");\n            }\n\n            Console.WriteLine(\"\\n--- REQUEST 2 ---\");\n            using (var scope = provider.CreateScope())\n            {\n                var s = scope.ServiceProvider.GetRequiredService<IProductService>();\n                Console.WriteLine($\"Scoped ID: {s.GetInstanceId()}\");\n            }\n\n            Console.WriteLine(\"\\n⚠️ Captive Dependency:\");\n            Console.WriteLine(\"  WRONG: AddSingleton<ScopedService>()\");\n            Console.WriteLine(\"  RIGHT: AddScoped<ScopedService>()\");\n        }\n    }\n}",
+    "exercises": [
+      "Viết 3 service implementations cùng interface, mỗi cái có một instance ID. Đăng ký với 3 lifetimes khác nhau. Trong một request, resolve interface 5 lần và in ra ID.",
+      "Tạo DbContextFactory pattern cho multi-tenant application. Mỗi tenant có connection string riêng.",
+      "Implement decorator pattern với DI: tạo interface IProductRepository, concrete ProductRepository, và logging decorator LoggingProductRepository."
+    ],
+    "keywords": [
+      "Dependency Injection",
+      "DI Container",
+      "IoC",
+      "Singleton",
+      "Scoped",
+      "Transient",
+      "Constructor Injection",
+      "Service Registration",
+      "ServiceProvider",
+      "CreateScope",
+      "Captive Dependency",
+      "Disposable",
+      "AddSingleton/Scoped/Transient"
+    ]
+  },
+  {
+    "id": "jwt-authentication-authorization",
+    "title": "JWT Authentication & Authorization",
+    "chapter": "web-backend",
+    "level": 2,
+    "overview": "Xác thực (Authentication) xác định ai đang truy cập, ủy quyền (Authorization) quyết định họ được làm gì. Bài học trình bày JWT (JSON Web Token), cách implement authentication/authorization trong ASP.NET Core, với roles, claims, và policies.",
+    "theory": "Authentication và Authorization là hai bước bảo mật riêng biệt nhưng liên quan chặt chẽ.\n\n**JWT (JSON Web Token)**\n\nJWT là standard (RFC 7519) cho truyền claims giữa hai parties. JWT gồm 3 phần: Header (algorithm), Payload (claims), Signature. Claims: sub (user ID), name, email, role, exp, iat. Client gửi JWT trong Authorization header: Bearer <token>. JWT stateless — server không cần lưu token.\n\n**Authentication Flow**\n\n1. User gửi credentials qua POST /api/auth/login. 2. Server validate, tạo JWT với claims. 3. Client lưu token. 4. Client gửi token trong Authorization header cho mọi request. 5. Server verify signature, check expiration.\n\n**Roles vs Claims**\n\nRoles là simple identifier (admin, user). Claims là key-value pair chứa thông tin chi tiết. Policy-based authorization linh hoạt hơn role-based.\n\n**Authorization Policies**\n\nPolicy là named rule kết hợp multiple requirements. Ví dụ: RequireRole, RequireClaim, custom requirements.",
+    "codeExample": "using System;\nusing System.Collections.Generic;\nusing System.IdentityModel.Tokens.Jwt;\nusing System.Security.Claims;\nusing System.Text;\nusing Microsoft.IdentityModel.Tokens;\n\nnamespace JWTAuthenticationAuthorization\n{\n    public class JwtService\n    {\n        private readonly string _secretKey = \"YourSuperSecretKeyThatIsAtLeast32CharactersLong!\";\n\n        public string GenerateToken(string userId, string username, List<string> roles)\n        {\n            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));\n            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);\n\n            var claims = new List<Claim>\n            {\n                new(JwtRegisteredClaimNames.Sub, userId),\n                new(\"username\", username)\n            };\n            foreach (var role in roles)\n                claims.Add(new Claim(ClaimTypes.Role, role));\n\n            var token = new JwtSecurityToken(\n                issuer: \"MyApp\",\n                audience: \"MyAppUsers\",\n                claims: claims,\n                expires: DateTime.UtcNow.AddMinutes(15),\n                signingCredentials: credentials);\n\n            return new JwtSecurityTokenHandler().WriteToken(token);\n        }\n\n        public ClaimsPrincipal? ValidateToken(string token)\n        {\n            var tokenHandler = new JwtSecurityTokenHandler();\n            var key = Encoding.UTF8.GetBytes(_secretKey);\n            try\n            {\n                return tokenHandler.ValidateToken(token, new TokenValidationParameters\n                {\n                    ValidateIssuerSigningKey = true,\n                    IssuerSigningKey = new SymmetricSecurityKey(key),\n                    ValidateIssuer = true,\n                    ValidIssuer = \"MyApp\",\n                    ValidateAudience = true,\n                    ValidAudience = \"MyAppUsers\",\n                    ValidateLifetime = true\n                }, out _);\n            }\n            catch { return null; }\n        }\n    }\n\n    class Program\n    {\n        static void Main()\n        {\n            var jwtService = new JwtService();\n            var token = jwtService.GenerateToken(\"1\", \"admin\", new List<string> { \"Admin\", \"User\" });\n            Console.WriteLine($\"JWT: {token[..50]}...\");\n\n            var principal = jwtService.ValidateToken(token);\n            Console.WriteLine($\"User: {principal?.FindFirst(\"username\")?.Value}\");\n            Console.WriteLine($\"Roles: {string.Join(\", \", principal?.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value))}\");\n        }\n    }\n}",
+    "exercises": [
+      "Implement complete JWT auth system: register, login, refresh token, logout. Lưu refresh tokens trong database với expiration.",
+      "Tạo multi-tenant authorization: mỗi user thuộc một tenant, chỉ access data của tenant mình.",
+      "Implement role-based + permission-based hybrid: User có nhiều Roles, mỗi Role có nhiều Permissions. Viết custom AuthorizationHandler."
+    ],
+    "keywords": [
+      "JWT",
+      "JSON Web Token",
+      "Bearer token",
+      "Authentication",
+      "Authorization",
+      "Claims",
+      "Roles",
+      "Policies",
+      "Refresh token",
+      "Access token",
+      "JwtBearerDefaults",
+      "TokenValidationParameters",
+      "IClaimsTransformation"
+    ]
+  },
+  {
+    "id": "entity-framework-core",
+    "title": "Entity Framework Core (DbContext, Migrations, Relationships)",
+    "chapter": "web-backend",
+    "level": 2,
+    "overview": "Entity Framework Core (EF Core) là ORM giúp tương tác với database bằng C# objects thay vì SQL thuần. Bài học trình bày cách define DbContext, relationships, migrations, và các query patterns trong EF Core.",
+    "theory": "Entity Framework Core là phiên bản cross-platform, lightweight của Entity Framework, được viết lại hoàn toàn cho .NET Core.\n\n**DbContext**\n\nDbContext là primary class để interact với database. DbContext là Scoped — đăng ký mặc định trong ASP.NET Core. Mỗi HTTP request có một DbContext instance, tự động disposed khi request kết thúc.\n\n**Entity Configuration**\n\nTwo ways: Data Annotations (attributes) và Fluent API (trong OnModelCreating). Fluent API linh hoạt hơn và được ưu tiên.\n\n**Relationships**\n\n1-to-1: Mỗi User có một Profile. 1-to-Many: Mỗi User có nhiều Orders. Many-to-Many: Users có nhiều Roles và ngược lại (từ EF Core 5: skip navigation).\n\n**Migrations**\n\nMigrations quản lý database schema changes. Commands: dotnet ef migrations add, dotnet ef database update.\n\n**Query Patterns**\n\nTracking vs No-Tracking: AsNoTracking() performance tốt hơn cho read-only queries. Include() eager load related data. ThenInclude() load nested navigation properties.",
+    "codeExample": "using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Threading.Tasks;\nusing Microsoft.EntityFrameworkCore;\n\nnamespace EntityFrameworkCoreBasics\n{\n    public class User\n    {\n        public int Id { get; set; }\n        public string Name { get; set; }\n        public string Email { get; set; }\n        public List<Order> Orders { get; set; } = new();\n    }\n\n    public class Order\n    {\n        public int Id { get; set; }\n        public decimal TotalAmount { get; set; }\n        public int UserId { get; set; }\n        public User User { get; set; }\n    }\n\n    public class AppDbContext : DbContext\n    {\n        public DbSet<User> Users => Set<User>();\n        public DbSet<Order> Orders => Set<Order>();\n\n        protected override void OnModelCreating(ModelBuilder modelBuilder)\n        {\n            modelBuilder.Entity<User>(entity =>\n            {\n                entity.HasKey(u => u.Id);\n                entity.Property(u => u.Name).IsRequired().HasMaxLength(100);\n                entity.HasIndex(u => u.Email).IsUnique();\n            });\n\n            modelBuilder.Entity<Order>(entity =>\n            {\n                entity.HasKey(o => o.Id);\n                entity.HasOne(o => o.User)\n                      .WithMany(u => u.Orders)\n                      .HasForeignKey(o => o.UserId);\n            });\n        }\n    }\n\n    class Program\n    {\n        static async Task Main()\n        {\n            Console.WriteLine(\"=== ENTITY FRAMEWORK CORE ===\");\n            Console.WriteLine(\"Migrations Commands:\");\n            Console.WriteLine(\"  dotnet ef migrations add InitialCreate\");\n            Console.WriteLine(\"  dotnet ef database update\");\n            Console.WriteLine();\n            Console.WriteLine(\"Relationship Types:\");\n            Console.WriteLine(\"  1-to-1: User → Profile\");\n            Console.WriteLine(\"  1-to-Many: User → Orders\");\n            Console.WriteLine(\"  Many-to-Many: User ↔ Role\");\n        }\n    }\n}",
+    "exercises": [
+      "Tạo DbContext cho hệ thống blog: Entities: Post, Author, Tag, Comment. Định nghĩa relationships và migrations.",
+      "Implement optimistic concurrency với concurrency token (RowVersion). Khi update, nếu token changed thì throw DbUpdateConcurrencyException, retry tối đa 3 lần.",
+      "Viết batch insert 10,000 records dùng EF Core. So sánh performance giữa SaveChanges mỗi record, SaveChanges sau tất cả, và ExecuteSqlRaw bulk insert."
+    ],
+    "keywords": [
+      "Entity Framework Core",
+      "DbContext",
+      "DbSet",
+      "Migrations",
+      "Fluent API",
+      "Relationships",
+      "1-to-1",
+      "1-to-Many",
+      "Many-to-Many",
+      "Include/ThenInclude",
+      "AsNoTracking",
+      "Change Tracking",
+      "Concurrency",
+      "Lazy/Eager loading"
+    ]
+  },
+  {
+    "id": "repository-unit-of-work",
+    "title": "Repository Pattern & Unit of Work",
+    "chapter": "web-backend",
+    "level": 2,
+    "overview": "Repository Pattern tạo abstraction layer giữa business logic và data access, giúp code testable và maintainable. Unit of Work theo dõi tất cả changes trong một transaction, đảm bảo data consistency.",
+    "theory": "Repository Pattern và Unit of Work là hai patterns thường dùng cùng nhau trong layered architecture.\n\n**Repository Pattern**\n\nRepository định nghĩa interface cho data access operations, che giấu chi tiết ORM/database. Business logic chỉ biết interface. Lợi ích: Testability, Flexibility, Single responsibility, Consistency.\n\n\nGeneric Repository: interface IRepository<T> với CRUD operations cho mọi entity. Specific Repository: chứa domain-specific queries.\n\n**Unit of Work**\n\nUnit of Work theo dõi tất cả entities bị thay đổi trong một business operation, và chỉ gọi SaveChanges() một lần khi tất cả hoàn tất. Điều này đảm bảo atomic transactions.\n\nUnit of Work chứa references đến tất cả repositories. DbContext của EF Core là implementation tự nhiên của Unit of Work.\n\n**Transaction Management**\n\nExplicit transaction với ITransaction: Begin(), Commit(), Rollback(). Multiple SaveChanges trong cùng transaction.",
+    "codeExample": "using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Linq.Expressions;\nusing System.Threading.Tasks;\nusing Microsoft.EntityFrameworkCore;\n\nnamespace RepositoryUnitOfWork\n{\n    public interface IRepository<T> where T : class\n    {\n        Task<T?> GetByIdAsync(int id);\n        Task<List<T>> GetAllAsync();\n        Task AddAsync(T entity);\n        void Update(T entity);\n        void Delete(T entity);\n        Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null);\n    }\n\n    public class Repository<T> : IRepository<T> where T : class\n    {\n        protected readonly DbContext _context;\n        protected readonly DbSet<T> _dbSet;\n\n        public Repository(DbContext context)\n        {\n            _context = context;\n            _dbSet = context.Set<T>();\n        }\n\n        public async Task<T?> GetByIdAsync(int id) => await _dbSet.FindAsync(id);\n        public async Task<List<T>> GetAllAsync() => await _dbSet.AsNoTracking().ToListAsync();\n        public async Task AddAsync(T entity) => await _dbSet.AddAsync(entity);\n        public void Update(T entity) => _dbSet.Update(entity);\n        public void Delete(T entity) => _dbSet.Remove(entity);\n        public async Task<int> CountAsync(Expression<Func<T, bool>>? predicate = null)\n            => predicate == null ? await _dbSet.CountAsync() : await _dbSet.CountAsync(predicate);\n    }\n\n    public interface IUnitOfWork : IDisposable\n    {\n        IRepository<User> Users { get; }\n        IRepository<Order> Orders { get; }\n        Task<int> SaveChangesAsync();\n        Task BeginTransactionAsync();\n        Task CommitTransactionAsync();\n        Task RollbackTransactionAsync();\n    }\n\n    public class User { public int Id { get; set; } public string Name { get; set; } }\n    public class Order { public int Id { get; set; } public int UserId { get; set; } public decimal Amount { get; set; } }\n    public class AppDbContext : DbContext\n    {\n        public DbSet<User> Users => Set<User>();\n        public DbSet<Order> Orders => Set<Order>();\n    }\n\n    class Program\n    {\n        static async Task Main()\n        {\n            Console.WriteLine(\"Generic Repository: IRepository<T> — CRUD cho mọi entity\");\n            Console.WriteLine(\"Unit of Work: IUnitOfWork — quản lý transaction, access repositories\");\n        }\n    }\n}",
+    "exercises": [
+      "Implement generic Repository<T> với pagination, filtering, và sorting. Thêm Include() support để eager load related data.",
+      "Tạo IUnitOfWork implementation wrap Entity Framework Core. Implement BeginTransactionAsync, CommitTransactionAsync, RollbackTransactionAsync.",
+      "Viết unit tests cho OrderService dùng Moq. Mock IUnitOfWork và IOrderRepository."
+    ],
+    "keywords": [
+      "Repository Pattern",
+      "Unit of Work",
+      "Generic Repository",
+      "Specific Repository",
+      "IUnitOfWork",
+      "IRepository<T>",
+      "Transaction",
+      "DbContextTransaction",
+      "Specification Pattern",
+      "CQRS",
+      "Data Access Layer",
+      "DAL"
+    ]
+  },
+  {
+    "id": "clean-architecture",
+    "title": "Clean Architecture (Layers, Dependencies, SOLID)",
+    "chapter": "web-backend",
+    "level": 3,
+    "overview": "Clean Architecture là kiến trúc phân chia ứng dụng thành các layers với dependencies chỉ đi một chiều (từ ngoài vào trong). Bài học trình bày cách tổ chức code theo Clean Architecture, các nguyên tắc SOLID.",
+    "theory": "Clean Architecture được định nghĩa bởi Robert C. Martin (Uncle Bob). Nguyên tắc cốt lõi: các circles bên trong không phụ thuộc vào các circles bên ngoài.\n\n**4 Layers chính**\n\n1. Domain Layer (innermost): Chứa Entities, Value Objects, Enums, Domain Events. Không có external dependencies.\n\n2. Application Layer: Chứa Use Cases, DTOs, Interfaces (ports), Command/Query objects, MediatR handlers.\n\n3. Infrastructure Layer: Implementations của interfaces. Chứa: EF Core DbContext, Repositories, External services.\n\n4. Presentation Layer (outermost): ASP.NET Core Controllers, Middleware, Filters.\n\n**Dependency Rule**\n\nSource code dependencies chỉ hướng inward. Inner circles không biết gì về outer circles. Achieved qua: Interfaces/Abstractions trong inner circles, Implementations trong outer circles.\n\n**SOLID Principles**\n\nS — Single Responsibility: Mỗi class chỉ có một lý do để thay đổi. O — Open/Closed: Open for extension, closed for modification. L — Liskov Substitution. I — Interface Segregation. D — Dependency Inversion.",
+    "codeExample": "using System;\nusing System.Collections.Generic;\nusing System.Linq;\n\nnamespace CleanArchitectureDemo\n{\n    // LAYER 1: DOMAIN — Entities, Value Objects, Interfaces\n    public class Order\n    {\n        public int Id { get; set; }\n        public string OrderNumber { get; set; }\n        public int CustomerId { get; set; }\n        public decimal TotalAmount { get; private set; }\n        public List<OrderItem> Items { get; private set; } = new();\n\n        public void AddItem(string productName, int quantity, decimal unitPrice)\n        {\n            Items.Add(new OrderItem { ProductName = productName, Quantity = quantity, UnitPrice = unitPrice });\n            TotalAmount = Items.Sum(i => i.Quantity * i.UnitPrice);\n        }\n    }\n\n    public class OrderItem { public int Id { get; set; } public string ProductName { get; set; } public int Quantity { get; set; } public decimal UnitPrice { get; set; } }\n\n    public interface IOrderRepository\n    {\n        Task<Order?> GetByIdAsync(int id);\n        Task AddAsync(Order order);\n        void Update(Order order);\n    }\n\n    public interface IEmailService\n    {\n        Task SendOrderConfirmationAsync(string email, Order order);\n    }\n\n    // LAYER 2: APPLICATION — Use Cases, DTOs, Handlers\n    public record CreateOrderDto(int CustomerId, List<(string Product, int Qty, decimal Price)> Items);\n    public record OrderDto(int Id, string OrderNumber, decimal TotalAmount);\n\n    public class CreateOrderCommand\n    {\n        public CreateOrderDto Dto { get; }\n        public CreateOrderCommand(CreateOrderDto dto) => Dto = dto;\n    }\n\n    public class CreateOrderHandler\n    {\n        private readonly IOrderRepository _repository;\n\n        public CreateOrderHandler(IOrderRepository repository) => _repository = repository;\n\n        public async Task<OrderDto> Handle(CreateOrderCommand command)\n        {\n            var order = new Order { OrderNumber = $\"ORD-{Guid.NewGuid():N}\"[..12] };\n            foreach (var item in command.Dto.Items)\n                order.AddItem(item.Product, item.Qty, item.Price);\n\n            await _repository.AddAsync(order);\n            return new OrderDto(order.Id, order.OrderNumber, order.TotalAmount);\n        }\n    }\n\n    class Program\n    {\n        static void Main()\n        {\n            Console.WriteLine(\"src/\");\n            Console.WriteLine(\"├── Domain/           # Entities, ValueObjects, Interfaces\");\n            Console.WriteLine(\"├── Application/      # Use Cases, Handlers\");\n            Console.WriteLine(\"├── Infrastructure/   # EF Core, Repositories\");\n            Console.WriteLine(\"└── Presentation/     # Controllers, Middleware\");\n            Console.WriteLine();\n            Console.WriteLine(\"SOLID: S-O-L-I-D\");\n        }\n    }\n}",
+    "exercises": [
+      "Thiết kế Clean Architecture cho hệ thống e-commerce. Xác định layers, entities, interfaces trong Domain, và commands/queries trong Application.",
+      "Implement MediatR pipeline với 3 behaviors: Validation, Logging, Performance.",
+      "Viết một Use Case hoàn chỉnh: CancelOrderUseCase. Validate, update status, gửi notification, audit log. Tất cả trong một transaction."
+    ],
+    "keywords": [
+      "Clean Architecture",
+      "Domain-Driven Design",
+      "SOLID",
+      "Layers",
+      "Dependency Rule",
+      "Use Cases",
+      "Commands",
+      "Queries",
+      "CQRS",
+      "MediatR",
+      "Ports & Adapters",
+      "Domain Entities",
+      "Value Objects",
+      "Cross-cutting concerns"
+    ]
+  },
+  {
+    "id": "cqrs-mediatr",
+    "title": "CQRS & MediatR",
+    "chapter": "web-backend",
+    "level": 3,
+    "overview": "CQRS (Command Query Responsibility Segregation) tách biệt read và write operations thành hai models riêng. MediatR là thư viện implementing Mediator pattern giúp decouple request/handler.",
+    "theory": "CQRS là pattern tách biệt Command (write operations) và Query (read operations) thành hai models riêng.\n\n**Tại sao CQRS?**\n\nTrong traditional layered architecture, read và write dùng chung model. CQRS giải quyết bằng cách: Separate models phù hợp với từng operation; Separate data stores (optional); Independent scaling.\n\n**Command vs Query**\n\nCommand: CreateOrder, UpdateProduct, DeleteUser. Trả về: void, Id. Query: GetOrderById, ListProducts. Trả về: DTOs với data cần hiển thị.\n\n**MediatR Pattern**\n\nMediatR implements Mediator pattern: client gửi request, MediatR route đến handler phù hợp. Lợi ích: Decoupling, Single Responsibility, Testability, Cross-cutting.\n\n**Pipeline Behaviors**\n\nMediatR cho phép đăng ký behaviors chạy trước/sau handler. Common behaviors: ValidationBehavior, LoggingBehavior, PerformanceBehavior, CachingBehavior.\n\n**Notifications (Domain Events)**\n\nINotification là internal event trong application. Khi command hoàn thành, có thể publish notification. Multiple handlers có thể subscribe cùng notification (fan-out).",
+    "codeExample": "using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Threading;\nusing System.Threading.Tasks;\n\nnamespace CQRSMediatR\n{\n    // CQRS — SEPARATE MODELS FOR READ AND WRITE\n    public record CreateProductCommand(string Name, decimal Price, int Stock);\n    public record ProductListDto(int Id, string Name, decimal Price, bool InStock);\n    public record ProductDetailDto(int Id, string Name, decimal Price, int Stock, List<string> Reviews);\n\n    // MEDIATR — REQUEST & HANDLER INTERFACES\n    public interface IRequest<TResponse> { }\n    public interface IRequestHandler<TRequest, TResponse> where TRequest : IRequest<TResponse>\n    {\n        Task<TResponse> Handle(TRequest request, CancellationToken ct);\n    }\n\n    // COMMAND HANDLER\n    public class CreateProductHandler : IRequestHandler<CreateProductCommand, int>\n    {\n        public Task<int> Handle(CreateProductCommand request, CancellationToken ct)\n        {\n            var newId = new Random().Next(1, 10000);\n            Console.WriteLine($\"[Command] Created: {request.Name} (ID: {newId})\");\n            return Task.FromResult(newId);\n        }\n    }\n\n    // QUERY HANDLER\n    public record GetProductsQuery(int Page, int PageSize) : IRequest<List<ProductListDto>>;\n\n    public class GetProductsHandler : IRequestHandler<GetProductsQuery, List<ProductListDto>>\n    {\n        public Task<List<ProductListDto>> Handle(GetProductsQuery request, CancellationToken ct)\n        {\n            var products = Enumerable.Range(1, 50).Select(i => new ProductListDto(i, $\"Product {i}\", i * 10.99m, i % 3 != 0)).ToList();\n            Console.WriteLine($\"[Query] Returning {products.Count} products\");\n            return Task.FromResult(products);\n        }\n    }\n\n    // PIPELINE BEHAVIOR\n    public interface IPipelineBehavior<TRequest, TResponse>\n    {\n        Task<TResponse> Handle(TRequest request, CancellationToken ct, RequestHandlerDelegate<TResponse> next);\n    }\n    public delegate Task<TResponse> RequestHandlerDelegate<TResponse>();\n\n    public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>\n    {\n        public async Task<TResponse> Handle(TRequest request, CancellationToken ct, RequestHandlerDelegate<TResponse> next)\n        {\n            Console.WriteLine($\"[CQRS] Handling {typeof(TRequest).Name}\");\n            var result = await next();\n            Console.WriteLine($\"[CQRS] Completed {typeof(TRequest).Name}\");\n            return result;\n        }\n    }\n\n    class Program\n    {\n        static async Task Main()\n        {\n            Console.WriteLine(\"Commands (Write): CreateProductCommand, UpdateProductCommand\");\n            Console.WriteLine(\"Queries (Read): GetProductsQuery, GetProductByIdQuery\");\n            Console.WriteLine(\"Pipeline Behaviors: Validation, Logging, Performance\");\n\n            var handler = new CreateProductHandler();\n            var id = await handler.Handle(new CreateProductCommand(\"Laptop\", 20000000, 10), CancellationToken.None);\n            Console.WriteLine($\"Created Product ID: {id}\");\n        }\n    }\n}",
+    "exercises": [
+      "Implement CQRS cho hệ thống blog: Commands (CreatePost, UpdatePost, DeletePost) và Queries (GetPostById, ListPublishedPosts). Dùng MediatR với pipeline behaviors.",
+      "Tạo Domain Event system: khi Order được tạo → publish OrderCreated event → 3 handlers: EmailHandler, InventoryHandler, AnalyticsHandler.",
+      "Implement Read Model projection từ Command Model: khi CreateProductCommand execute, đồng thời projection sang read-optimized DTO."
+    ],
+    "keywords": [
+      "CQRS",
+      "Command",
+      "Query",
+      "MediatR",
+      "IRequest",
+      "IRequestHandler",
+      "INotification",
+      "INotificationHandler",
+      "Pipeline Behaviors",
+      "Validation Behavior",
+      "Logging Behavior",
+      "Domain Events"
+    ]
+  },
+  {
+    "id": "caching-redis-hangfire",
+    "title": "Caching (Redis, In-Memory) & Background Jobs (Hangfire)",
+    "chapter": "web-backend",
+    "level": 3,
+    "overview": "Caching giúp giảm database load và tăng response time. Background Jobs cho phép chạy các tác vụ nặng không đồng bộ. Bài học trình bày caching strategies với Redis và In-Memory, cùng với Hangfire cho background job processing.",
+    "theory": "Caching và Background Jobs là hai kỹ thuật tối ưu hiệu suất ứng dụng web.\n\n**Caching Strategies**\n\nCache-Aside (Lazy Loading): Application check cache trước, nếu miss thì load từ database rồi store vào cache. Write-Through: Khi write, đồng thời update cache và database. Cache luôn consistent.\n\nCache Invalidation: Khi data thay đổi, cache phải được invalidate. Strategies: TTL-based, Event-based, Manual.\n\n**In-Memory Caching**\n\nIMemoryCache là built-in in-process cache của ASP.NET Core. Đơn giản, không cần setup, nhanh. Nhược điểm: không share giữa multiple instances.\n\n**Redis Caching**\n\nRedis là in-memory data store. Dùng cho distributed cache (share giữa multiple instances), session storage, pub/sub messaging.\n\n**Background Jobs**\n\nBackground jobs chạy tách biệt với HTTP request cycle. Use cases: Email sending, Report generation, Scheduled tasks.\n\n**Hangfire**\n\nHangfire là background job processing framework. Features: Fire-and-forget, Delayed, Recurring, Continuations. Dashboard built-in để monitor jobs.",
+    "codeExample": "using System;\nusing System.Collections.Generic;\nusing System.Threading.Tasks;\nusing Microsoft.Extensions.Caching.Memory;\n\nnamespace CachingAndBackgroundJobs\n{\n    public class InMemoryCacheService\n    {\n        private readonly IMemoryCache _cache;\n        private static readonly TimeSpan DefaultExpiration = TimeSpan.FromMinutes(10);\n\n        public InMemoryCacheService(IMemoryCache cache) => _cache = cache;\n\n        public T? GetOrSet<T>(string key, Func<T?> factory)\n        {\n            if (_cache.TryGetValue(key, out T? value))\n            {\n                Console.WriteLine($\"[Cache] HIT: {key}\");\n                return value;\n            }\n            Console.WriteLine($\"[Cache] MISS: {key}\");\n            value = factory();\n            if (value != null)\n                _cache.Set(key, value, DefaultExpiration);\n            return value;\n        }\n\n        public void Remove(string key) => _cache.Remove(key);\n    }\n\n    public class RedisCacheService\n    {\n        public async Task<T?> GetAsync<T>(string key)\n        {\n            Console.WriteLine($\"[Redis] GET: {key}\");\n            return default;\n        }\n\n        public async Task SetAsync<T>(string key, T value, TimeSpan? expiration = null)\n        {\n            Console.WriteLine($\"[Redis] SET: {key} (expires: {expiration?.TotalMinutes ?? 15} min)\");\n        }\n\n        public async Task<List<Product>> GetProductsAsync(int categoryId)\n        {\n            var cacheKey = $\"products:category:{categoryId}\";\n            var cached = await GetAsync<List<Product>>(cacheKey);\n            if (cached != null) return cached;\n\n            var products = await LoadProductsFromDb(categoryId);\n            await SetAsync(cacheKey, products, TimeSpan.FromMinutes(10));\n            return products;\n        }\n\n        private Task<List<Product>> LoadProductsFromDb(int categoryId)\n        {\n            Console.WriteLine($\"[DB] Loading products for category {categoryId}\");\n            return Task.FromResult(new List<Product>());\n        }\n    }\n\n    public class Product { public int Id { get; set; } public string Name { get; set; } }\n\n    class Program\n    {\n        static async Task Main()\n        {\n            var cache = new InMemoryCacheService(new MemoryCache(new MemoryCacheOptions()));\n            var result = cache.GetOrSet(\"test-key\", () => \"expensive-result\");\n            Console.WriteLine($\"Result: {result}\");\n\n            var redis = new RedisCacheService();\n            await redis.GetProductsAsync(1);\n        }\n    }\n}",
+    "exercises": [
+      "Implement distributed caching với Redis cho product catalog. Dùng cache-aside pattern với TTL. Thêm cache stampede prevention.",
+      "Tạo background job system với Hangfire: SendEmailJob fire-and-forget, GenerateReportJob delayed, CleanupJob recurring mỗi giờ.",
+      "Implement caching layer với interface ICachedRepository<T> wrap IRepository<T>. Dùng decorator pattern."
+    ],
+    "keywords": [
+      "Caching",
+      "Redis",
+      "In-Memory Cache",
+      "Cache-Aside",
+      "Cache Stampede",
+      "IMemoryCache",
+      "StackExchange.Redis",
+      "Cache Invalidation",
+      "Hangfire",
+      "Background Jobs",
+      "Fire-and-Forget",
+      "Delayed Jobs",
+      "Recurring Jobs",
+      "Cron",
+      "Job Retry"
+    ]
+  },
+  {
+    "id": "docker-deploy",
+    "title": "Docker & Deploy (Nginx + Linux + systemd + CI/CD)",
+    "chapter": "web-backend",
+    "level": 3,
+    "overview": "Containerization với Docker giúp deploy ứng dụng .NET nhất quán giữa các môi trường. Bài học trình bày cách containerize ASP.NET Core app, deploy lên Linux VPS với Nginx reverse proxy, cấu hình systemd service, và thiết lập CI/CD pipeline.",
+    "theory": "Docker là nền tảng containerization cho phép đóng gói ứng dụng và dependencies vào container để chạy nhất quán trên mọi môi trường.\n\n**Docker Concepts**\n\nImage: Template read-only chứa application và dependencies. Container: Running instance của image. Dockerfile: Script định nghĩa cách build image. Registry: Nơi lưu trữ images. Volume: Persistent storage cho container.\n\n**Multi-Stage Dockerfile cho .NET**\n\n\nStage 1 (build): dùng mdk image đầy đủ, restore packages, build app. Stage 2 (runtime): dùng aspnet image, chỉ copy published output. Kết quả: production image chỉ cỡ 200MB.\n\n**Nginx Reverse Proxy**\n\nProduction setup: Client → Nginx (443/80) → ASP.NET Core (Kestrel). Nginx benefits: SSL termination, static file serving, load balancing.\n\n**CI/CD Pipeline**\n\nCI (Continuous Integration): Mỗi commit trigger build + test. CD (Continuous Deployment): Build artifact được deploy tự động. Tools: GitHub Actions, GitLab CI/CD, Azure DevOps.\n\n**Security Best Practices**\n\nNon-root user trong container. Minimal base image. Secrets management. Regular image scanning.",
+    "codeExample": "# Dockerfile — Multi-stage build cho ASP.NET Core 8\nFROM mcr.microsoft.com/dotnet/sdk:8.0 AS build\nWORKDIR /src\nCOPY [\"Api/Api.csproj\", \"Api/\"]\nRUN dotnet restore \"Api/Api.csproj\"\nCOPY . .\nWORKDIR \"/src/Api\"\nRUN dotnet publish -c Release -o /app/publish --no-restore\n\nFROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime\nWORKDIR /app\nRUN adduser --disabled-password --gecos \"\" appuser && chown -R appuser /app\nUSER appuser\nCOPY --from=build /app/publish .\nENV ASPNETCORE_URLS=http://+:5000\nEXPOSE 5000\nENTRYPOINT [\"dotnet\", \"Api.dll\"]\n\n# docker-compose.yml\nversion: '3.8'\nservices:\n  api:\n    build: .\n    ports:\n      - \"5000:5000\"\n    environment:\n      - ASPNETCORE_ENVIRONMENT=Production\n    depends_on:\n      db:\n        condition: service_healthy\n  db:\n    image: mcr.microsoft.com/mssql/server:2022-latest\n    environment:\n      - ACCEPT_EULA=Y\n      - SA_PASSWORD=YourPassword\n    healthcheck:\n      test: [\"CMD\", \"sqlcmd\", \"-S\", \"localhost\", \"-U\", \"sa\", \"-P\", \"YourPassword\", \"-Q\", \"SELECT 1\"]\n      interval: 10s\n      retries: 10\n\n# nginx.conf\nserver {\n    listen 80;\n    location / {\n        proxy_pass http://api:5000;\n        proxy_http_version 1.1;\n        proxy_set_header Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n    }\n}",
+    "exercises": [
+      "Tạo multi-stage Dockerfile cho ASP.NET Core 8 app. Stage 1 build với SDK, Stage 2 runtime với aspnet image. Tạo non-root user, set health check.",
+      "Viết docker-compose.yml với 4 services: ASP.NET Core API, SQL Server, Redis, Nginx. Configure networks, volumes, health checks.",
+      "Tạo GitHub Actions workflow: build, test, build Docker image, push to registry, SSH deploy to VPS với zero-downtime deployment."
+    ],
+    "keywords": [
+      "Docker",
+      "Dockerfile",
+      "Multi-stage build",
+      "docker-compose",
+      "Container",
+      "Nginx",
+      "Reverse Proxy",
+      "systemd",
+      "CI/CD",
+      "GitHub Actions",
+      "Health Checks",
+      "SSL/TLS",
+      "Environment Variables",
+      "Docker Volumes"
+    ]
+  },
+  {
+    "id": "mobile-api-design",
+    "title": "API Design cho Mobile (Pagination, Filtering, Versioning, DTO)",
+    "chapter": "mobile-backend",
+    "level": 2,
+    "overview": "Mobile app APIs có những yêu cầu khác biệt so với web: cần hỗ trợ offline-first, bandwidth-efficient, và backward-compatible qua nhiều app versions.",
+    "theory": "Mobile apps có những constraints đặc biệt: intermittent connectivity, limited bandwidth, battery consumption, varying app versions.\n\n**Pagination Strategies**\n\nOffset-based pagination: ?page=1&pageSize=20. Đơn giản nhưng có vấn đề với large datasets.\n\nCursor-based pagination: ?cursor=abc123&limit=20. Dùng last item's ID/createdAt làm cursor. Hiệu quả hơn với large datasets, consistent khi data thay đổi.\n\n**API Versioning cho Mobile**\n\nMobile apps không update ngay lập tức. Backward compatibility cực kỳ quan trọng. URL Path Versioning: /api/v1/... /api/v2/... là approach được recommend.\n\n**DTO Design cho Mobile**\n\nMobile apps thường chỉ cần subset của entity data. Design DTOs based on screen/page requirements. Flatten nested structures để giảm payload size. Use field selection (?fields=id,name,price).\n\n**Offline-First Support**\n\nOptimistic updates: UI update ngay khi user action, sync với server sau. Conflict resolution strategy.\n\n**Delta Sync**\n\nThay vì sync full data mỗi lần, chỉ sync changes từ last sync timestamp. /api/sync?since=2024-01-15T10:30:00Z.",
+    "codeExample": "using System;\nusing System.Collections.Generic;\n\nnamespace MobileApiDesign\n{\n    // Lightweight DTO cho mobile list views\n    public record ProductListDto(int Id, string Name, string ThumbnailUrl, decimal Price, bool InStock);\n\n    // Cursor-based pagination response\n    public record CursorPagedResult<T>(\n        List<T> Items,\n        string? NextCursor,\n        bool HasMore,\n        int TotalCount\n    );\n\n    // API Response wrapper\n    public record ApiResponse<T>(\n        bool Success,\n        T? Data,\n        string? Message,\n        List<string> Errors,\n        PaginationMeta? Pagination\n    )\n    {\n        public static ApiResponse<T> Ok(T data) => new(true, data, null, new(), null);\n        public static ApiResponse<T> Fail(string error) => new(false, default, null, new() { error }, null);\n    }\n\n    public record PaginationMeta(string? NextCursor, bool HasMore, int? TotalCount, int PageSize);\n\n    // Delta sync response\n    public record SyncResponse<T>(List<T> Created, List<T> Updated, List<int> DeletedIds, DateTime SyncTimestamp);\n\n    public class CursorPaginationService\n    {\n        public CursorPagedResult<ProductListDto> GetProducts(string? cursor, int limit = 20)\n        {\n            var items = new List<ProductListDto>\n            {\n                new(1, \"Laptop\", \"/thumbs/laptop.jpg\", 20000000, true),\n                new(2, \"Chuột\", \"/thumbs/mouse.jpg\", 200000, true)\n            };\n\n            return new CursorPagedResult<ProductListDto>(\n                Items: items,\n                NextCursor: \"eyJjcmVhdGVkQXQiOiI...\",\n                HasMore: true,\n                TotalCount: 150\n            );\n        }\n    }\n\n    class Program\n    {\n        static void Main()\n        {\n            Console.WriteLine(\"Cursor-based pagination: ?cursor=xxx&limit=20\");\n            Console.WriteLine(\"Offset-based: ?page=2&pageSize=20\");\n            Console.WriteLine(\"Field selection: ?fields=id,name,price\");\n            Console.WriteLine(\"Delta sync: /api/sync?since={timestamp}\");\n        }\n    }\n}",
+    "exercises": [
+      "Implement cursor-based pagination cho API với DbContext. Cursor encode {CreatedAt, Id} thành base64. Handle cursor=null cho first page.",
+      "Tạo delta sync API: GET /api/sync?since={timestamp} trả về created, updated, deleted items từ timestamp đó.",
+      "Implement API versioning với 2 versions: v1 trả UserDto đơn giản, v2 thêm avatar, lastLogin, preferences."
+    ],
+    "keywords": [
+      "cursor pagination",
+      "offset pagination",
+      "keyset pagination",
+      "API versioning",
+      "mobile API",
+      "DTO",
+      "field selection",
+      "delta sync",
+      "offline-first",
+      "rate limiting",
+      "gzip compression",
+      "ETag",
+      "retry-after"
+    ]
+  },
+  {
+    "id": "push-notifications",
+    "title": "Push Notifications (Firebase FCM / APNs)",
+    "chapter": "mobile-backend",
+    "level": 2,
+    "overview": "Push notifications là kênh giao tiếp quan trọng để re-engage users. Bài học trình bày cách implement push notifications với Firebase Cloud Messaging (FCM) cho Android và Apple Push Notification Service (APNs) cho iOS.",
+    "theory": "Push notifications là messages được server gửi đến user's device thông qua platform services.\n\n**Firebase Cloud Messaging (FCM)**\n\nFCM là Google's cross-platform messaging solution. Hoạt động trên Android, iOS, web. Flow: 1) App register với FCM, nhận device token. 2) App gửi token lên backend. 3) Backend gửi notification qua FCM HTTP API. 4) FCM route đến correct device.\n\n**Apple Push Notification Service (APNs)**\n\nAPNs là Apple's native push service cho iOS apps. Two environments: Sandbox (development) và Production. Authentication: Token-based (recommended).\n\n**Notification Types**\n\nLocal Notifications: Scheduled locally on device. Remote Notifications: Gửi từ server qua FCM/APNs. Data Messages: Chỉ data payload. Notification Messages: OS hiển thị tự động.\n\n**Topic Subscriptions**\n\nTopic cho phép subscribe devices vào channel. Server gửi message đến topic, tất cả subscribers nhận được. Dùng cho: news alerts, group notifications.\n\n**Device Token Management**\n\nDevice tokens có thể thay đổi. Best practices: Update token lên server mỗi khi app starts. Remove invalid tokens.",
+    "codeExample": "using System;\nusing System.Collections.Generic;\nusing System.Net.Http;\nusing System.Text;\nusing System.Text.Json;\nusing System.Threading.Tasks;\n\nnamespace PushNotifications\n{\n    public class FcmNotificationService\n    {\n        private readonly HttpClient _httpClient;\n        private readonly string _projectId;\n\n        public FcmNotificationService(HttpClient httpClient, string projectId)\n        {\n            _httpClient = httpClient;\n            _projectId = projectId;\n        }\n\n        public async Task SendToDeviceAsync(string deviceToken, string title, string body, Dictionary<string, string>? data = null)\n        {\n            var message = new\n            {\n                message = new\n                {\n                    token = deviceToken,\n                    notification = new { title, body },\n                    data = data ?? new Dictionary<string, string>()\n                }\n            };\n\n            var json = JsonSerializer.Serialize(message);\n            var content = new StringContent(json, Encoding.UTF8, \"application/json\");\n\n            Console.WriteLine($\"[FCM] Sending to {deviceToken[..10]}...\");\n            Console.WriteLine($\"[FCM] Title: {title}\");\n        }\n\n        public async Task SendToTopicAsync(string topic, string title, string body)\n        {\n            var message = new\n            {\n                message = new\n                {\n                    topic = topic,\n                    notification = new { title, body }\n                }\n            };\n            Console.WriteLine($\"[FCM] Broadcasting to topic: {topic}\");\n        }\n    }\n\n    class Program\n    {\n        static async Task Main()\n        {\n            var fcm = new FcmNotificationService(new HttpClient(), \"project-id\");\n\n            await fcm.SendToDeviceAsync(\n                \"fcm_device_token_12345\",\n                \"Đơn hàng mới!\",\n                \"Đơn hàng #12345 đã được tạo thành công.\",\n                new Dictionary<string, string> { [\"orderId\"] = \"12345\" }\n            );\n\n            await fcm.SendToTopicAsync(\"promotions\", \"Khuyến mãi!\", \"Giảm 50% cho tất cả sản phẩm\");\n        }\n    }\n}",
+    "exercises": [
+      "Implement complete push notification system: FCM service với OAuth2 authentication, device token management (register, update, cleanup), retry với exponential backoff.",
+      "Create notification preference system: user chọn notification types họ muốn nhận. Implement topic-based subscriptions.",
+      "Build notification analytics: track delivery rate, open rate. Implement notification batching."
+    ],
+    "keywords": [
+      "Firebase Cloud Messaging",
+      "FCM",
+      "APNs",
+      "push notifications",
+      "device token",
+      "topic subscription",
+      "silent push",
+      "background notification",
+      "notification payload",
+      "APNs priority",
+      "JWT auth"
+    ]
+  },
+  {
+    "id": "file-upload-cloud-storage",
+    "title": "File Upload & Cloud Storage (Azure Blob / AWS S3)",
+    "chapter": "mobile-backend",
+    "level": 2,
+    "overview": "Lưu trữ file (images, documents, videos) trên cloud storage thay vì local server là best practice. Bài học trình bày cách implement file upload với presigned URLs (tránh bottleneck qua server), Azure Blob Storage, AWS S3.",
+    "theory": "Cloud storage là giải pháp lưu trữ file scale infinitely, highly available, và cost-effective.\n\n**Direct Upload vs Proxy Upload**\n\nProxy Upload: Client → Server → Cloud Storage. Nhược điểm: server bandwidth bottleneck.\n\nDirect Upload (Presigned URL): Client → Cloud Storage (direct). Ưu điểm: no server bottleneck, scalable, supports large files. Đây là approach recommended.\n\n**Azure Blob Storage**\n\nAzure Blob là object storage của Microsoft. Blob types: Block blobs (files), Append blobs (logging), Page blobs (disks). Access tiers: Hot, Cool, Archive.\n\n**AWS S3**\n\nS3 (Simple Storage Service) là object storage của AWS. Bucket là container. Objects có key (path-like). Storage classes: S3 Standard, S3 IA, S3 Glacier.\n\n**Presigned URLs**\n\nPresigned URL là URL có embedded authentication cho phép temporary access. Có expiry time (thường 15-60 phút). Có thể limit permissions.\n\n**Security Considerations**\n\nContent-Type validation. File size limits. Virus scanning. Access control: Private (cần presigned), Public (CDN), Signed.",
+    "codeExample": "using System;\nusing System.IO;\nusing System.Threading.Tasks;\n\nnamespace FileUploadCloudStorage\n{\n    public class AzureBlobService\n    {\n        private readonly string _containerName;\n\n        public AzureBlobService(string containerName)\n        {\n            _containerName = containerName;\n        }\n\n        public string GenerateUploadUrl(string blobName, string contentType, int expiryMinutes = 15)\n        {\n            var sasToken = $\"?sv=2021-06-08&ss=b&srt=co&sp=wd&se=2024-12-31T23:59:59Z&st=2024-01-01T00:00:00Z&spr=https&sig=...\";\n            var url = $\"https://storage.blob.core.windows.net/{_containerName}/{blobName}{sasToken}\";\n            Console.WriteLine($\"[Azure] Generated upload URL for: {blobName}\");\n            return url;\n        }\n\n        public string GenerateDownloadUrl(string blobName, int expiryMinutes = 60)\n        {\n            Console.WriteLine($\"[Azure] Generated download URL for: {blobName}\");\n            return $\"https://storage.blob.core.windows.net/{_containerName}/{blobName}?...\";\n        }\n    }\n\n    public class FileUploadController\n    {\n        private readonly AzureBlobService _blobService;\n\n        public record PresignRequest(string FileName, string ContentType, long FileSize);\n        public record PresignResponse(string UploadUrl, string BlobName, string FinalUrl);\n\n        public PresignResponse GeneratePresignedUrl(PresignRequest request, int userId)\n        {\n            var allowedTypes = new[] { \"image/jpeg\", \"image/png\", \"image/webp\", \"application/pdf\" };\n            if (!allowedTypes.Contains(request.ContentType))\n                throw new InvalidOperationException($\"Content type {request.ContentType} not allowed\");\n\n            var maxSize = 10L * 1024 * 1024;\n            if (request.FileSize > maxSize)\n                throw new InvalidOperationException(\"File size exceeds limit\");\n\n            var extension = Path.GetExtension(request.FileName);\n            var blobName = $\"uploads/{userId}/{Guid.NewGuid():N}{extension}\";\n            var uploadUrl = _blobService.GenerateUploadUrl(blobName, request.ContentType, 15);\n            var downloadUrl = _blobService.GenerateDownloadUrl(blobName, 60);\n\n            return new PresignResponse(uploadUrl, blobName, downloadUrl);\n        }\n    }\n\n    class Program\n    {\n        static void Main()\n        {\n            var blobService = new AzureBlobService(\"uploads\");\n            var presignedUrl = blobService.GenerateUploadUrl(\"avatar.jpg\", \"image/jpeg\", 15);\n            Console.WriteLine($\"Presigned URL: {presignedUrl[..60]}...\");\n        }\n    }\n}",
+    "exercises": [
+      "Implement complete file upload system: presigned URL generation với Azure Blob, file validation (type, size, magic bytes), background processing với image resize/thumbnail generation.",
+      "Create S3-compatible upload system với AWS SDK: multipart upload cho large files (>100MB) với progress tracking, resume capability.",
+      "Build multi-cloud abstraction: interface ICloudStorage với implementations cho Azure Blob và AWS S3."
+    ],
+    "keywords": [
+      "Azure Blob Storage",
+      "AWS S3",
+      "presigned URL",
+      "direct upload",
+      "cloud storage",
+      "multipart upload",
+      "file validation",
+      "content-type",
+      "SAS token",
+      "image processing",
+      "thumbnail generation",
+      "CDN integration"
+    ]
+  },
+  {
+    "id": "signalr-realtime",
+    "title": "Real-time với SignalR (Hub, Groups, Clients)",
+    "chapter": "mobile-backend",
+    "level": 2,
+    "overview": "SignalR là thư viện real-time communication của ASP.NET Core, cho phép server push data đến clients ngay lập tức. Bài học trình bày cách implement hubs, groups, connection management, và scale với Redis backplane.",
+    "theory": "SignalR là abstraction over multiple real-time transport technologies: WebSockets (preferred), Server-Sent Events, Long Polling.\n\n**Hubs**\n\nHub là high-level communication pipe cho phép client-server two-way messaging. Mỗi Hub method có thể được gọi từ client, và server có thể invoke client methods.\n\n**Connection Lifecycle**\n\nOnConnectedAsync: Khi client kết nối. OnDisconnectedAsync: Khi client ngắt kết nối. OnReconnectingAsync, OnReconnectedAsync.\n\n**Groups**\n\nGroups cho phép broadcast đến subset of clients. Server gửi message đến group → tất cả members nhận được. Use cases: Chat rooms, Game lobbies, Notification channels.\n\n\n**Scale Out với Redis Backplane**\n\nMultiple servers: Cần backplane để messages broadcast cross-server. Redis Backplane: Các server instances share messages qua Redis pub/sub.\n\n**Authentication & Authorization**\n\nSignalR hỗ trợ same authentication mechanisms như HTTP: JWT Bearer tokens, Cookie authentication.",
+    "codeExample": "using System;\nusing System.Collections.Concurrent;\nusing System.Threading.Tasks;\n\nnamespace SignalRRealtime\n{\n    public class ChatHub : Hub\n    {\n        private static readonly ConcurrentDictionary<string, string> _userConnections = new();\n\n        public async Task JoinRoom(string roomId, string username)\n        {\n            await Groups.AddToGroupAsync(Context.ConnectionId, roomId);\n            _userConnections[Context.ConnectionId] = username;\n\n            await Clients.Group(roomId).SendAsync(\"UserJoined\", new\n            {\n                Username = username,\n                JoinedAt = DateTime.UtcNow\n            });\n\n            Console.WriteLine($\"[Chat] {username} joined room {roomId}\");\n        }\n\n        public async Task SendMessage(string roomId, string message)\n        {\n            var username = _userConnections.GetValueOrDefault(Context.ConnectionId, \"Anonymous\");\n            await Clients.Group(roomId).SendAsync(\"ReceiveMessage\", new\n            {\n                Username = username,\n                Content = message,\n                SentAt = DateTime.UtcNow\n            });\n\n            Console.WriteLine($\"[Chat] {username}: {message}\");\n        }\n\n        public async Task LeaveRoom(string roomId)\n        {\n            await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomId);\n            var username = _userConnections.GetValueOrDefault(Context.ConnectionId, \"\");\n            await Clients.Group(roomId).SendAsync(\"UserLeft\", new { Username = username });\n        }\n\n        public override async Task OnDisconnectedAsync(Exception? exception)\n        {\n            if (_userConnections.TryRemove(Context.ConnectionId, out var username))\n                Console.WriteLine($\"[SignalR] {username} disconnected\");\n            await base.OnDisconnectedAsync(exception);\n        }\n    }\n\n    class Program\n    {\n        static void Main()\n        {\n            Console.WriteLine(\"=== SIGNALR REAL-TIME COMMUNICATION ===\");\n            Console.WriteLine();\n            Console.WriteLine(\"Hub Methods:\");\n            Console.WriteLine(\"  clients.All.SendAsync()     — Broadcast to all\");\n            Console.WriteLine(\"  clients.Group(name).SendAsync() — Broadcast to group\");\n            Console.WriteLine(\"  clients.User(id).SendAsync() — Send to all user's connections\");\n            Console.WriteLine(\"  clients.Client(id).SendAsync() — Send to specific connection\");\n            Console.WriteLine();\n            Console.WriteLine(\"Groups: Groups.AddToGroupAsync(), Groups.RemoveFromGroupAsync()\");\n            Console.WriteLine(\"Scale: Redis Backplane — share messages across server instances\");\n        }\n    }\n}",
+    "exercises": [
+      "Implement complete chat application với SignalR: ChatHub với rooms, join/leave, send message, private messages, user presence. Lưu message history vào database.",
+      "Create notification system với SignalR: Product price change notifications. Users subscribe/unsubscribe to products. Scale với Redis backplane.",
+      "Build collaborative document editor: multiple users edit same document in real-time. Use SignalR groups per document."
+    ],
+    "keywords": [
+      "SignalR",
+      "WebSockets",
+      "Hub",
+      "Groups",
+      "Clients",
+      "Real-time",
+      "Server-Sent Events",
+      "Long Polling",
+      "IHubContext",
+      "StreamAsChannelAsync",
+      "Redis Backplane",
+      "Strongly-Typed Hub",
+      "Reconnection"
+    ]
+  },
+  {
+    "id": "game-server-architecture",
+    "title": "Game Server Architecture (Stateful vs Stateless, Tick Rate)",
+    "chapter": "game-backend",
+    "level": 3,
+    "overview": "Game server backend có những requirements khác biệt so với web backend: low latency, high throughput, real-time state synchronization. Bài học trình bày kiến trúc game server, state management, tick rate systems.",
+    "theory": "Game server backend khác biệt cơ bản với web backend: yêu cầu real-time responsiveness (milliseconds thay vì seconds), maintain game state ở server.\n\n**Stateful vs Stateless Architecture**\n\nStateless Architecture: Server không lưu game state. Client authoritative cho local state. Phù hợp: turn-based games, card games, puzzle games. Ưu điểm: easy to scale, simple deployment.\n\n\nStateful Architecture: Server lưu và sync game state. Server authoritative. Phù hợp: real-time games, MMO, battle royale, FPS.\n\n**Tick Rate System**\n\nTick rate = số lần server update game state mỗi giây. Common rates: 20-64 ticks/sec for competitive games. Higher tick rate = more responsive nhưng tốn bandwidth/CPU.\n\n**Network Models**\n\nAuthoritative Server: Server duy trì single source of truth. Client-Side Prediction: Client predict local actions immediately. Rollback Netcode: Client predict all actions, server broadcast authoritative state.\n\n**Game Loop Pattern**\n\nwhile (running) { ProcessInput(); UpdateGameState(tickRate); BroadcastState(); Sleep(tickInterval); }",
+    "codeExample": "using System;\nusing System.Collections.Concurrent;\nusing System.Threading;\nusing System.Threading.Tasks;\n\nnamespace GameServerArchitecture\n{\n    public class GameServer\n    {\n        private const int TickRate = 20; // 20 ticks per second\n        private readonly ConcurrentDictionary<string, GameRoom> _rooms = new();\n        private CancellationTokenSource _cts = new();\n\n        public GameServer() => StartGameLoop();\n\n        private async Task StartGameLoop()\n        {\n            Console.WriteLine($\"[Server] Starting game loop at {TickRate} ticks/second\");\n            var tickIntervalMs = 1000 / TickRate;\n\n            while (!_cts.Token.IsCancellationRequested)\n            {\n                var tickStart = DateTime.UtcNow;\n                ProcessPendingMessages();\n                UpdateGameState();\n                BroadcastState();\n                var elapsed = (DateTime.UtcNow - tickStart).TotalMilliseconds;\n                if (tickIntervalMs - elapsed > 0)\n                    await Task.Delay((int)(tickIntervalMs - elapsed));\n            }\n        }\n\n        private ConcurrentQueue<object> _messageQueue = new();\n\n        private void ProcessPendingMessages()\n        {\n            while (_messageQueue.TryDequeue(out var message))\n            {\n                // Process game messages\n            }\n        }\n\n        private void UpdateGameState()\n        {\n            foreach (var room in _rooms.Values)\n            {\n                if (room.State != RoomState.Playing) continue;\n                room.UpdatePhysics(1.0f / TickRate);\n                room.CheckCollisions();\n            }\n        }\n\n        private void BroadcastState()\n        {\n            foreach (var room in _rooms.Values)\n            {\n                if (room.State != RoomState.Playing) continue;\n                var delta = room.GetStateDelta();\n                foreach (var playerId in room.PlayerIds)\n                    SendToPlayer(playerId, delta);\n            }\n        }\n\n        private void SendToPlayer(string connectionId, object state) { }\n\n        public class GameRoom\n        {\n            public string Id { get; set; }\n            public RoomState State { get; set; } = RoomState.Lobby;\n            public List<string> PlayerIds { get; set; } = new();\n            public ConcurrentDictionary<string, GameEntity> Entities { get; set; } = new();\n\n            public void UpdatePhysics(float deltaTime)\n            {\n                foreach (var entity in Entities.Values)\n                    entity.Update(deltaTime);\n            }\n\n            public void CheckCollisions() { }\n            public object GetStateDelta() => new { };\n        }\n\n        public class GameEntity\n        {\n            public string Id { get; set; }\n            public float X, Y, Z;\n            public void Update(float deltaTime) { X += deltaTime; }\n        }\n\n        public enum RoomState { Lobby, Playing, Ended }\n    }\n\n    class Program\n    {\n        static void Main()\n        {\n            Console.WriteLine(\"Stateful vs Stateless:\");\n            Console.WriteLine(\"  Stateful: Server lưu game state (FPS, MMO)\");\n            Console.WriteLine(\"  Stateless: Client authoritative (Puzzle, Card games)\");\n            Console.WriteLine();\n            Console.WriteLine(\"Tick Rate: 20-64 ticks/sec typical\");\n\n            var server = new GameServer();\n            Thread.Sleep(500);\n        }\n    }\n}",
+    "exercises": [
+      "Implement game server với fixed tick rate (20 ticks/sec). Game loop xử lý input, update physics, broadcast state. Dùng CancellationToken để graceful shutdown.",
+      "Create matchmaking system: players queue up, system group them by skill (ELO rating). Support 2v2 and 4v4 game modes.",
+      "Build state synchronization system với delta compression: server tracks full state, clients only receive changes."
+    ],
+    "keywords": [
+      "game server",
+      "tick rate",
+      "stateful",
+      "stateless",
+      "authoritative server",
+      "client prediction",
+      "delta compression",
+      "matchmaking",
+      "Elo rating",
+      "game loop",
+      "spatial partitioning",
+      "interest management"
+    ]
+  },
+  {
+    "id": "leaderboard-matchmaking-api",
+    "title": "Leaderboard, Matchmaking & Player Data API",
+    "chapter": "game-backend",
+    "level": 3,
+    "overview": "Leaderboards và matchmaking là heart của competitive gaming. Bài học trình bày cách implement high-performance leaderboard với Redis sorted sets, skill-based matchmaking, và player data management.",
+    "theory": "Leaderboards, matchmaking, và player data management là những features thiết yếu cho game backend với yêu cầu performance rất cao.\n\n**Leaderboard Implementation**\n\nRedis Sorted Sets là cấu trúc dữ liệu perfect cho leaderboards. ZADD thêm/update score, ZREVRANK lấy rank, ZSCORE lấy score. O(log N) complexity.\n\n**Leaderboard Types**\n\nGlobal: Tất cả players. Friends: Chỉ friends. Weekly/Monthly: Reset theo time period. Regional: Players theo geographic region.\n\n**Matchmaking Systems**\n\nELO/Glicko-2 rating system để measure skill. Queue-based matchmaking: players enter queue, system periodically builds matches. Goals: Fair games, Quick queue times.\n\n**Elo Rating System**\n\nExpected score: E = 1 / (1 + 10^((Rb - Ra) / 400)). New rating: R' = R + K * (S - E). K-factor determines volatility.\n\n**Player Data Management**\n\nPlayer data: Profile, Inventory, Progression, Settings. Storage: Redis (real-time), PostgreSQL (persistent).",
+    "codeExample": "using System;\nusing System.Collections.Generic;\nusing System.Linq;\nusing System.Threading.Tasks;\n\nnamespace LeaderboardMatchmaking\n{\n    public class RedisLeaderboardService\n    {\n        public async Task UpdateScoreAsync(string playerId, int score)\n        {\n            Console.WriteLine($\"[Leaderboard] Updated {playerId} score: {score}\");\n        }\n\n        public async Task<int?> GetRankAsync(string playerId)\n        {\n            return new Random().Next(1, 1000);\n        }\n\n        public async Task<List<LeaderboardEntry>> GetTopPlayersAsync(int count = 10)\n        {\n            return Enumerable.Range(1, count).Select(i => new LeaderboardEntry\n            {\n                Rank = i,\n                PlayerId = $\"Player_{1000 - i}\",\n                Username = $\"TopPlayer{i}\",\n                Score = (count - i + 1) * 1000\n            }).ToList();\n        }\n\n        public async Task<List<LeaderboardEntry>> GetPlayersAroundRankAsync(string playerId, int range = 5)\n        {\n            var playerRank = await GetRankAsync(playerId) ?? 500;\n            return Enumerable.Range(playerRank - range, range * 2).Select(i => new LeaderboardEntry\n            {\n                Rank = i,\n                PlayerId = $\"Player_{i}\",\n                Username = $\"Player{i}\",\n                Score = (1000 - i) * 10\n            }).ToList();\n        }\n    }\n\n    public class LeaderboardEntry\n    {\n        public int Rank { get; set; }\n        public string PlayerId { get; set; }\n        public string Username { get; set; }\n        public int Score { get; set; }\n    }\n\n    public class EloRatingService\n    {\n        private const int DefaultRating = 1000;\n        private const int KFactor = 32;\n\n        public (int NewWinnerRating, int NewLoserRating) CalculateMatch(int winnerRating, int loserRating)\n        {\n            double Ew = 1.0 / (1.0 + Math.Pow(10, (loserRating - winnerRating) / 400.0));\n            double El = 1.0 / (1.0 + Math.Pow(10, (winnerRating - loserRating) / 400.0));\n\n            int newWinnerRating = (int)(winnerRating + KFactor * (1 - Ew));\n            int newLoserRating = (int)(loserRating + KFactor * (0 - El));\n\n            return (newWinnerRating, newLoserRating);\n        }\n    }\n\n    class Program\n    {\n        static async Task Main()\n        {\n            var leaderboard = new RedisLeaderboardService();\n            await leaderboard.UpdateScoreAsync(\"Player1\", 1500);\n            var rank = await leaderboard.GetRankAsync(\"Player1\");\n            Console.WriteLine($\"Rank: {rank}\");\n\n            var top = await leaderboard.GetTopPlayersAsync(5);\n            foreach (var entry in top)\n                Console.WriteLine($\"#{entry.Rank} {entry.Username}: {entry.Score}\");\n\n            var elo = new EloRatingService();\n            var (winnerNew, loserNew) = elo.CalculateMatch(1200, 1100);\n            Console.WriteLine($\"Elo: Winner 1200→{winnerNew}, Loser 1100→{loserNew}\");\n        }\n    }\n}",
+    "exercises": [
+      "Implement full leaderboard system với Redis: global, weekly, monthly, friends leaderboards. Handle concurrent score updates.",
+      "Create matchmaking system: queue với ELO rating, periodic match creation, skill range checking. Support multiple game modes.",
+      "Build player data management: profile, inventory, statistics. Dùng Redis cache + PostgreSQL persistent storage."
+    ],
+    "keywords": [
+      "leaderboard",
+      "Redis Sorted Sets",
+      "Elo rating",
+      "matchmaking",
+      "skill-based matchmaking",
+      "SBMM",
+      "player data",
+      "inventory",
+      "leaderboard types",
+      "Glicko-2"
+    ]
+  }
+]
