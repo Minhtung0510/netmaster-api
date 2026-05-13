@@ -1,0 +1,18 @@
+# render.yaml — Render Blueprints
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: netmaster-api
+    env: docker
+    region: singapore
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: PORT
+        value: "10000"

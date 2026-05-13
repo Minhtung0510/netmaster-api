@@ -23,7 +23,6 @@ builder.Services.AddHttpClient<IGeminiService, GeminiService>();
 
 // ===== CONTROLLERS & API =====
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
 
 // ===== CORS — cho phép mọi origin =====
 builder.Services.AddCors(options =>
@@ -37,6 +36,13 @@ builder.Services.AddCors(options =>
     });
 });
 
+// ===== SWAGGER =====
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new() { Title = "NetMasterAPI", Version = "v1", Description = "Học C# Backend với AI Tutor" });
+});
+
 // ===== LOGGING =====
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
@@ -46,6 +52,13 @@ builder.Logging.SetMinimumLevel(
 var app = builder.Build();
 
 // ===== PIPELINE =====
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "NetMasterAPI v1");
+    c.RoutePrefix = "swagger-ui";
+});
+
 app.UseCors("AllowAll");
 
 app.UseDefaultFiles();
@@ -58,7 +71,7 @@ app.MapGet("/", () => Results.Ok(new
 {
     service = "NetMasterAPI",
     status = "running",
-    docs = "/swagger",
+    docs = "/swagger-ui/index.html",
     health = "/health"
 })).WithTags("Root");
 
