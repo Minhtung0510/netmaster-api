@@ -25,21 +25,12 @@ builder.Services.AddHttpClient<IGeminiService, GeminiService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-// ===== CORS — cho phép frontend Vercel truy cập =====
-var allowedOrigins = new List<string>
-{
-    "http://localhost:3000",
-    "https://*.vercel.app",
-    "https://*.vercel.com"
-};
-
-builder.Configuration.GetSection("AllowedOrigins").Bind(allowedOrigins);
-
+// ===== CORS — cho phép mọi origin =====
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowFrontend", policy =>
+    options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins(allowedOrigins.ToArray())
+        policy.SetIsOriginAllowed(_ => true)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .WithExposedHeaders("X-Request-Id");
@@ -55,9 +46,18 @@ builder.Logging.SetMinimumLevel(
 var app = builder.Build();
 
 // ===== PIPELINE =====
-app.UseCors("AllowFrontend");
+app.UseCors("AllowAll");
 
 app.MapControllers();
+
+// Root endpoint
+app.MapGet("/", () => Results.Ok(new
+{
+    service = "NetMasterAPI",
+    status = "running",
+    docs = "/swagger",
+    health = "/health"
+})).WithTags("Root");
 
 // Health check endpoint
 app.MapGet("/health", () => Results.Ok(new
