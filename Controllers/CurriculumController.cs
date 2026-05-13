@@ -9,27 +9,21 @@ namespace NetMasterAPI.Controllers;
 public class CurriculumController : ControllerBase
 {
     private static readonly List<Lesson> _lessons;
-    private readonly ILogger<CurriculumController> _logger;
 
     static CurriculumController()
     {
         var basePath = AppContext.BaseDirectory;
         var jsonPath = Path.Combine(basePath, "Data", "curriculum.json");
 
-        if (File.Exists(jsonPath))
+        if (System.IO.File.Exists(jsonPath))
         {
-            var json = File.ReadAllText(jsonPath);
+            var json = System.IO.File.ReadAllText(jsonPath);
             _lessons = JsonSerializer.Deserialize<List<Lesson>>(json) ?? new List<Lesson>();
         }
         else
         {
             _lessons = new List<Lesson>();
         }
-    }
-
-    public CurriculumController(ILogger<CurriculumController> logger)
-    {
-        _logger = logger;
     }
 
     [HttpGet]
@@ -44,8 +38,7 @@ public class CurriculumController : ControllerBase
         var lesson = _lessons.FirstOrDefault(l => l.Id == id);
         if (lesson == null)
         {
-            _logger.LogWarning("Lesson not found: {Id}", id);
-            return NotFound(new { error = $"Bài học '{id}' không tìm thấy." });
+            return NotFound(new { error = $"Bai hoc '{id}' khong tim thay." });
         }
         return Ok(lesson);
     }
