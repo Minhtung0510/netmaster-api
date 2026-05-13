@@ -48,6 +48,9 @@ var app = builder.Build();
 // ===== PIPELINE =====
 app.UseCors("AllowAll");
 
+app.UseDefaultFiles();
+app.UseStaticFiles();
+
 app.MapControllers();
 
 // Root endpoint

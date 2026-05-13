@@ -1,0 +1,1797 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NetMaster - Học C# Backend</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #0d1117;
+      --bg-secondary: #161b22;
+      --bg-tertiary: #1c2128;
+      --bg-elevated: #21262d;
+      --border: #30363d;
+      --border-light: #484f58;
+      --text-primary: #e6edf3;
+      --text-secondary: #8b949e;
+      --text-muted: #6e7681;
+      --accent: #58a6ff;
+      --accent-hover: #79b8ff;
+      --accent-glow: rgba(88, 166, 255, 0.15);
+      --green: #3fb950;
+      --green-bg: rgba(63, 185, 80, 0.1);
+      --purple: #d2a8ff;
+      --orange: #ffa657;
+      --red: #f85149;
+      --yellow: #e3b341;
+      --code-bg: #0d1117;
+      --sidebar-width: 280px;
+      --chat-width: 340px;
+    }
+
+    html, body { height: 100%; overflow: hidden; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* ===== LAYOUT ===== */
+    .app {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: var(--sidebar-width);
+      min-width: var(--sidebar-width);
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .sidebar-header {
+      padding: 20px 16px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+      color: white;
+    }
+
+    .logo-text {
+      font-size: 18px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      padding-left: 42px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px 0;
+    }
+
+    .sidebar-nav::-webkit-scrollbar { width: 4px; }
+    .sidebar-nav::-webkit-scrollbar-track { background: transparent; }
+    .sidebar-nav::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .chapter-label {
+      padding: 12px 16px 4px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-muted);
+    }
+
+    .lesson-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      cursor: pointer;
+      border-radius: 0;
+      transition: all 0.15s;
+      position: relative;
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .lesson-item:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
+    }
+
+    .lesson-item.active {
+      background: var(--accent-glow);
+      color: var(--accent);
+      border-right: 2px solid var(--accent);
+    }
+
+    .lesson-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--bg-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 600;
+      flex-shrink: 0;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .lesson-item.active .lesson-num {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .lesson-title {
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .lesson-level {
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 10px;
+      background: var(--bg-elevated);
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .lesson-level.lv1 { background: var(--green-bg); color: var(--green); }
+    .lesson-level.lv2 { background: rgba(163, 113, 247, 0.1); color: var(--purple); }
+    .lesson-level.lv3 { background: rgba(255, 166, 87, 0.1); color: var(--orange); }
+
+    /* ===== MAIN CONTENT ===== */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .main-header {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .lesson-header-info h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .lesson-header-info .chapter-tag {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .progress-bar-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .progress-bar {
+      width: 120px;
+      height: 6px;
+      background: var(--bg-elevated);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--purple));
+      border-radius: 3px;
+      transition: width 0.3s;
+    }
+
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px 32px;
+    }
+
+    .main-content::-webkit-scrollbar { width: 6px; }
+    .main-content::-webkit-scrollbar-track { background: transparent; }
+    .main-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ===== THEORY SECTION ===== */
+    .theory-section {
+      max-width: 800px;
+    }
+
+    .theory-section h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .theory-section h2::before {
+      content: '';
+      width: 4px;
+      height: 16px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .theory-content {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .theory-content p { margin-bottom: 12px; }
+
+    .theory-content strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ===== CODE BLOCK ===== */
+    .code-section {
+      margin-bottom: 32px;
+    }
+
+    .code-section h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .code-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .code-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .code-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .code-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .code-dot.red { background: #ff5f56; }
+    .code-dot.yellow { background: #ffbd2e; }
+    .code-dot.green { background: #27c93f; }
+
+    .code-lang {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+    }
+
+    .code-copy {
+      font-size: 11px;
+      color: var(--text-muted);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .code-copy:hover {
+      background: var(--border);
+      color: var(--text-primary);
+    }
+
+    .code-copy.copied {
+      color: var(--green);
+      border-color: var(--green);
+    }
+
+    pre {
+      padding: 20px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #c9d1d9;
+    }
+
+    pre::-webkit-scrollbar { height: 4px; }
+    pre::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* ===== SYNTAX HIGHLIGHTING ===== */
+    .kw { color: #ff7b72; font-weight: 500; }
+    .tp { color: #79c0ff; }
+    .fn { color: #d2a8ff; }
+    .cm { color: #8b949e; font-style: italic; }
+    .str { color: #a5d6ff; }
+    .num { color: #79c0ff; }
+    .cls { color: #ffa657; }
+    .nt { color: #7ee787; }
+    .op { color: #ff7b72; }
+    .rt { color: #79c0ff; }
+    .at { color: #79c0ff; }
+
+    /* ===== EXERCISE SECTION ===== */
+    .exercise-section {
+      margin-bottom: 32px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .exercise-section h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .exercise-section h3::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--yellow);
+      border-radius: 50%;
+    }
+
+    .exercise-list {
+      list-style: none;
+    }
+
+    .exercise-list li {
+      padding: 8px 0;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .exercise-list li:last-child { border-bottom: none; }
+
+    .exercise-list li::before {
+      content: '>';
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ===== NAV BUTTONS ===== */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: 1px solid var(--border);
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .nav-btn:hover {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      border-color: var(--border-light);
+    }
+
+    .nav-btn.primary {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .nav-btn.primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+      color: white;
+    }
+
+    .nav-btn.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    /* ===== CHAT PANEL ===== */
+    .chat-panel {
+      width: var(--chat-width);
+      min-width: var(--chat-width);
+      background: var(--bg-secondary);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .chat-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .chat-header-info h3 {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .chat-header-info p {
+      font-size: 10px;
+      color: var(--green);
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .chat-messages::-webkit-scrollbar { width: 4px; }
+    .chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .msg {
+      display: flex;
+      gap: 8px;
+      max-width: 95%;
+      animation: fadeIn 0.2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg.user { align-self: flex-end; flex-direction: row-reverse; }
+
+    .msg-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--purple));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .msg.user .msg-avatar {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+    }
+
+    .msg-bubble {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      border-top-left-radius: 4px;
+      padding: 10px 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+    }
+
+    .msg.user .msg-bubble {
+      background: var(--accent);
+      border-color: var(--accent);
+      border-top-left-radius: 12px;
+      border-top-right-radius: 4px;
+      color: white;
+    }
+
+    .msg.typing .msg-bubble {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      padding: 12px 16px;
+    }
+
+    .typing-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      animation: typingBounce 1.4s infinite;
+    }
+
+    .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    .chat-input-area {
+      padding: 12px;
+      border-top: 1px solid var(--border);
+      background: var(--bg-secondary);
+    }
+
+    .chat-input-wrapper {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      transition: border-color 0.15s;
+    }
+
+    .chat-input-wrapper:focus-within {
+      border-color: var(--accent);
+    }
+
+    .chat-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      resize: none;
+      max-height: 120px;
+      line-height: 1.5;
+    }
+
+    .chat-input::placeholder { color: var(--text-muted); }
+
+    .chat-send {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--accent);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      flex-shrink: 0;
+    }
+
+    .chat-send:hover { background: var(--accent-hover); }
+    .chat-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ===== SETTINGS MODAL ===== */
+    .settings-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .settings-overlay.open { display: flex; }
+
+    .settings-modal {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      width: 420px;
+      max-width: 90vw;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+
+    .settings-modal h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text-primary);
+    }
+
+    .settings-field {
+      margin-bottom: 14px;
+    }
+
+    .settings-field label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .settings-field input {
+      width: 100%;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: var(--text-primary);
+      font-size: 13px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .settings-field input:focus { border-color: var(--accent); }
+
+    .settings-field input::placeholder { color: var(--text-muted); }
+
+    .settings-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .settings-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .settings-actions .nav-btn { flex: 1; justify-content: center; }
+
+    .settings-btn {
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 14px;
+      transition: all 0.15s;
+    }
+
+    .settings-btn:hover {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .chat-panel { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .sidebar { display: none; }
+      .main-content { padding: 16px; }
+    }
+
+    /* ===== LOADING STATE ===== */
+    .loading-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--bg-primary);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .loading-overlay.active { display: flex; }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ===== API STATUS ===== */
+    .api-status {
+      position: absolute;
+      top: 16px;
+      right: 60px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+      padding: 4px 10px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+
+    .status-dot.connected { background: var(--green); }
+    .status-dot.error { background: var(--red); }
+
+    /* ===== MARKDOWN CONTENT ===== */
+    .theory-content p + p { margin-top: 12px; }
+    .theory-content strong { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+<!-- Loading -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <p style="color: var(--text-muted); font-size: 13px;">Đang tải bài học...</p>
+</div>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo">
+        <div class="logo-icon">&lt;/&gt;</div>
+        <span class="logo-text">NetMaster</span>
+      </div>
+      <div class="logo-sub">Học C# Backend với AI</div>
+    </div>
+    <nav class="sidebar-nav" id="lessonList"></nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <header class="main-header">
+      <div class="lesson-header-info">
+        <h1 id="lessonTitle">C# Cơ bản</h1>
+        <div class="chapter-tag" id="chapterTag">Foundation · Level 1</div>
+      </div>
+      <div class="progress-bar-container">
+        <span class="progress-text" id="progressText">1 / 24</span>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 4.2%"></div>
+        </div>
+      </div>
+      <button class="settings-btn" onclick="openSettings()" title="Cài đặt API">&#9881;</button>
+      <div class="api-status" id="apiStatus" onclick="openSettings()">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">Chưa kết nối</span>
+      </div>
+    </header>
+
+    <div class="main-content" id="mainContent">
+      <div class="theory-section">
+        <h2>Lý thuyết</h2>
+        <div class="theory-content" id="theoryContent"></div>
+      </div>
+
+      <div class="code-section">
+        <h3>&#x1F4BB; Code mẫu</h3>
+        <div class="code-block">
+          <div class="code-header">
+            <div class="code-dots">
+              <div class="code-dot red"></div>
+              <div class="code-dot yellow"></div>
+              <div class="code-dot green"></div>
+            </div>
+            <span class="code-lang">C#</span>
+            <button class="code-copy" id="codeCopyBtn" onclick="copyCode()">Copy</button>
+          </div>
+          <pre id="codeContent"></pre>
+        </div>
+      </div>
+
+      <div class="exercise-section" id="exerciseSection">
+        <h3>&#x270B; Bài tập thực hành</h3>
+        <ul class="exercise-list" id="exerciseList"></ul>
+      </div>
+
+      <div class="nav-buttons">
+        <button class="nav-btn" id="prevBtn" onclick="prevLesson()">
+          &#8592; Bài trước
+        </button>
+        <button class="nav-btn primary" id="nextBtn" onclick="nextLesson()">
+          Bài tiếp theo &#8594;
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- CHAT PANEL -->
+  <aside class="chat-panel">
+    <div class="chat-header">
+      <div class="chat-avatar">AI</div>
+      <div class="chat-header-info">
+        <h3>AI Tutor</h3>
+        <p>&#x2022; Đang hoạt động</p>
+      </div>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+      <div class="msg" id="welcomeMsg">
+        <div class="msg-avatar">AI</div>
+        <div class="msg-bubble">
+          Xin chào! Mình là <strong>AI Tutor</strong> của NetMaster.
+          Hỏi mình bất cứ điều gì về C# nhé! &#x1F4BB;
+        </div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <div class="chat-input-wrapper">
+        <textarea
+          class="chat-input"
+          id="chatInput"
+          placeholder="Hỏi về C#..."
+          rows="1"
+          onkeydown="handleChatKey(event)"
+          oninput="autoResize(this)"
+        ></textarea>
+        <button class="chat-send" id="sendBtn" onclick="sendMessage()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- SETTINGS MODAL -->
+<div class="settings-overlay" id="settingsOverlay" onclick="closeSettings(event)">
+  <div class="settings-modal" onclick="event.stopPropagation()">
+    <h2>&#9881; Cài đặt AI Tutor</h2>
+    <div class="settings-field">
+      <label>Google Gemini API Key</label>
+      <input type="password" id="apiEndpoint" placeholder="AI-..." />
+      <p class="settings-note">Lấy key tại <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--accent)">aistudio.google.com/apikey</a></p>
+    </div>
+    <div class="settings-actions">
+      <button class="nav-btn" onclick="closeSettings()">Hủy</button>
+      <button class="nav-btn primary" onclick="saveSettings()">Lưu</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== CURRICULUM DATA =====
+const lessons = [
+  { id: "csharp-basics", title: "C# Cơ bản", chapter: "foundation", chapterName: "Foundation", level: 1 },
+  { id: "csharp-oop", title: "OOP trong C#", chapter: "foundation", chapterName: "Foundation", level: 1 },
+  { id: "csharp-generics-delegates", title: "Generics, Delegates & Events", chapter: "foundation", chapterName: "Foundation", level: 1 },
+  { id: "csharp-linq-collections", title: "LINQ & Collections", chapter: "foundation", chapterName: "Foundation", level: 1 },
+  { id: "csharp-async-await", title: "Async / Await & Task", chapter: "foundation", chapterName: "Foundation", level: 1 },
+  { id: "dotnet-ecosystem-nuget", title: ".NET Ecosystem & NuGet", chapter: "foundation", chapterName: "Foundation", level: 1 },
+  { id: "aspnet-core-architecture", title: "ASP.NET Core Architecture", chapter: "web-backend", chapterName: "Web Backend", level: 2 },
+  { id: "rest-api-design", title: "REST API Design", chapter: "web-backend", chapterName: "Web Backend", level: 2 },
+  { id: "routing-controllers-actionresults", title: "Routing & Controllers", chapter: "web-backend", chapterName: "Web Backend", level: 2 },
+  { id: "middleware-pipeline-filters", title: "Middleware Pipeline & Filters", chapter: "web-backend", chapterName: "Web Backend", level: 2 },
+  { id: "dependency-injection-lifetimes", title: "Dependency Injection", chapter: "web-backend", chapterName: "Web Backend", level: 2 },
+  { id: "jwt-authentication-authorization", title: "JWT Auth & Authorization", chapter: "web-backend", chapterName: "Web Backend", level: 2 },
+  { id: "entity-framework-core", title: "Entity Framework Core", chapter: "web-backend", chapterName: "Web Backend", level: 2 },
+  { id: "repository-unit-of-work", title: "Repository & Unit of Work", chapter: "web-backend", chapterName: "Web Backend", level: 2 },
+  { id: "clean-architecture", title: "Clean Architecture", chapter: "web-backend", chapterName: "Web Backend", level: 3 },
+  { id: "cqrs-mediatr", title: "CQRS & MediatR", chapter: "web-backend", chapterName: "Web Backend", level: 3 },
+  { id: "caching-redis-hangfire", title: "Caching & Background Jobs", chapter: "web-backend", chapterName: "Web Backend", level: 3 },
+  { id: "docker-deploy", title: "Docker & Deploy", chapter: "web-backend", chapterName: "Web Backend", level: 3 },
+  { id: "mobile-api-design", title: "API Design cho Mobile", chapter: "mobile-backend", chapterName: "Mobile Backend", level: 2 },
+  { id: "push-notifications", title: "Push Notifications", chapter: "mobile-backend", chapterName: "Mobile Backend", level: 2 },
+  { id: "file-upload-cloud-storage", title: "File Upload & Cloud Storage", chapter: "mobile-backend", chapterName: "Mobile Backend", level: 2 },
+  { id: "signalr-realtime", title: "Real-time với SignalR", chapter: "mobile-backend", chapterName: "Mobile Backend", level: 2 },
+  { id: "game-server-architecture", title: "Game Server Architecture", chapter: "game-backend", chapterName: "Game Backend", level: 3 },
+  { id: "leaderboard-matchmaking-api", title: "Leaderboard & Matchmaking", chapter: "game-backend", chapterName: "Game Backend", level: 3 },
+];
+
+// ===== LESSON CONTENT (will be loaded from API) =====
+let lessonData = {};
+let currentLessonIndex = 0;
+let apiBase = localStorage.getItem('netmaster_api') || '';
+let isLoading = false;
+let isConnected = false;
+
+// ===== INITIALIZE =====
+document.addEventListener('DOMContentLoaded', () => {
+  renderLessonList();
+  if (apiBase) checkConnection();
+  loadLesson(0);
+});
+
+// ===== RENDER SIDEBAR =====
+function renderLessonList() {
+  const container = document.getElementById('lessonList');
+  const chapters = {};
+
+  lessons.forEach((l, i) => {
+    if (!chapters[l.chapter]) chapters[l.chapter] = {
+      name: l.chapterName,
+      lessons: []
+    };
+    chapters[l.chapter].lessons.push({ ...l, index: i });
+  });
+
+  const chapterOrder = ['foundation', 'web-backend', 'mobile-backend', 'game-backend'];
+  let html = '';
+  chapterOrder.forEach(ch => {
+    if (!chapters[ch]) return;
+    const num = lessons.indexOf(lessons.find(l => l.chapter === ch));
+    html += `<div class="chapter-label">${chapters[ch].name}</div>`;
+    chapters[ch].lessons.forEach(l => {
+      html += `
+        <div class="lesson-item${l.index === 0 ? ' active' : ''}" data-index="${l.index}" onclick="selectLesson(${l.index})">
+          <div class="lesson-num">${l.index + 1}</div>
+          <div class="lesson-title">${l.title}</div>
+          <div class="lesson-level lv${l.level}">L${l.level}</div>
+        </div>`;
+    });
+  });
+  container.innerHTML = html;
+}
+
+function selectLesson(index) {
+  document.querySelectorAll('.lesson-item').forEach(el => el.classList.remove('active'));
+  document.querySelector(`.lesson-item[data-index="${index}"]`).classList.add('active');
+  loadLesson(index);
+}
+
+// ===== LOAD LESSON =====
+async function loadLesson(index) {
+  currentLessonIndex = index;
+  const lesson = lessons[index];
+
+  // Update header
+  document.getElementById('lessonTitle').textContent = lesson.title;
+  document.getElementById('chapterTag').textContent = `${lesson.chapterName} · Level ${lesson.level}`;
+  document.getElementById('progressText').textContent = `${index + 1} / ${lessons.length}`;
+  document.getElementById('progressFill').style.width = `${((index + 1) / lessons.length) * 100}%`;
+
+  // Nav buttons
+  document.getElementById('prevBtn').classList.toggle('disabled', index === 0);
+  document.getElementById('nextBtn').classList.toggle('disabled', index === lessons.length - 1);
+
+  // Load from API — use same origin by default
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  loadingOverlay.classList.add('active');
+
+  const apiUrl = apiBase || window.location.origin;
+
+  try {
+    const res = await fetch(`${apiUrl}/api/curriculum/${lesson.id}`);
+    if (res.ok) {
+      const data = await res.json();
+      lessonData[lesson.id] = data;
+      renderLesson(data);
+      loadingOverlay.classList.remove('active');
+      return;
+    }
+  } catch (e) {
+    // fallback to static
+  }
+
+  // Static fallback
+  renderStaticLesson(lesson);
+  loadingOverlay.classList.remove('active');
+}
+
+function renderLesson(data) {
+  document.getElementById('theoryContent').innerHTML = parseMarkdown(data.theory || '');
+  document.getElementById('codeContent').innerHTML = highlightCode(data.codeExample || '// Chưa có code mẫu');
+  renderExercises(data.exercises || []);
+}
+
+function renderStaticLesson(lesson) {
+  const staticContent = getStaticContent(lesson.id);
+  document.getElementById('theoryContent').innerHTML = parseMarkdown(staticContent.theory);
+  document.getElementById('codeContent').innerHTML = highlightCode(staticContent.code);
+  renderExercises(staticContent.exercises);
+}
+
+function renderExercises(exercises) {
+  const container = document.getElementById('exerciseList');
+  if (!exercises || exercises.length === 0) {
+    exercises = [
+      'Viết lại ví dụ trên và chạy thử',
+      'Thay đổi giá trị biến và quan sát kết quả',
+      'Tự tạo một bài tập tương tự',
+    ];
+  }
+  container.innerHTML = exercises.map(e => `<li>${e}</li>`).join('');
+}
+
+// ===== MARKDOWN PARSER =====
+function parseMarkdown(text) {
+  if (!text) return '';
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code style="background:var(--bg-elevated);padding:2px 6px;border-radius:4px;font-family:JetBrains Mono,monospace;font-size:12px;color:var(--accent);">$1</code>')
+    .replace(/\n\n/g, '</p><p>')
+    .replace(/^(.+)$/, '<p>$1</p>');
+}
+
+// ===== SYNTAX HIGHLIGHTING =====
+function highlightCode(code) {
+  if (!code) return '';
+  const escaped = code
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+
+  return escaped
+    .replace(/(using|namespace|class|public|private|protected|internal|static|void|async|await|return|if|else|for|foreach|while|do|switch|case|break|continue|try|catch|finally|throw|new|this|base|null|true|false|var|const|readonly|sealed|override|virtual|abstract|interface|enum|struct|out|ref|in|params|get|set|value|where|T|yield|lock|checked|unchecked)\b/g, '<span class="kw">$1</span>')
+    .replace(/("(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'|`(?:[^`\\]|\\.)*`)/g, '<span class="str">$1</span>')
+    .replace(/\b(\d+\.?\d*[fFdDmMlL]?|0x[0-9a-fA-F]+)\b/g, '<span class="num">$1</span>')
+    .replace(/(//.*$)/gm, '<span class="cm">$1</span>')
+    .replace(/(\/\*[\s\S]*?\*\/)/g, '<span class="cm">$1</span>')
+    .replace(/\b(int|long|double|float|decimal|bool|char|string|byte|short|ushort|uint|ulong|object|dynamic|void|TKey|TValue|T)\b/g, '<span class="tp">$1</span>')
+    .replace(/\b(Task|List|Dictionary|HashSet|Queue|Stack|IEnumerable|ICollection|IList|IDictionary|Action|Func|Predicate|EventHandler|Lazy|Optional|Maybe)\b/g, '<span class="tp">$1</span>')
+    .replace(/\b([A-Z][a-zA-Z0-9_]*)\b(?=\s*[<(])/g, '<span class="cls">$1</span>');
+}
+
+// ===== NAVIGATION =====
+function prevLesson() {
+  if (currentLessonIndex > 0) loadLesson(currentLessonIndex - 1);
+  selectLesson(currentLessonIndex);
+}
+
+function nextLesson() {
+  if (currentLessonIndex < lessons.length - 1) loadLesson(currentLessonIndex + 1);
+  selectLesson(currentLessonIndex);
+}
+
+// ===== COPY CODE =====
+function copyCode() {
+  const code = document.getElementById('codeContent').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    const btn = document.getElementById('codeCopyBtn');
+    btn.textContent = 'Đã copy!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
+// ===== CHAT =====
+function handleChatKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || isLoading) return;
+
+  if (!apiBase) {
+    addMessage('user', text);
+    addMessage('ai', 'AI Tutor cần API key. Vui lòng nhập GEMINI_API_KEY trong cài đặt.');
+    input.value = '';
+    autoResize(input);
+    return;
+  }
+
+  addMessage('user', text);
+  input.value = '';
+  autoResize(input);
+
+  // Show typing
+  const typingId = addTypingIndicator();
+
+  isLoading = true;
+  document.getElementById('sendBtn').disabled = true;
+
+  try {
+    const currentLesson = lessons[currentLessonIndex];
+    const systemPrompt = `Bạn là AI Tutor của NetMaster - nền tảng học C# Backend. Bài học hiện tại: "${currentLesson.title}". Hãy trả lời bằng tiếng Việt, ngắn gọn, có code ví dụ khi cần. Chỉ dùng markdown đơn giản.`;
+
+    const res = await fetch(`${apiBase || window.location.origin}/api/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: text }
+        ]
+      })
+    });
+
+    removeTypingIndicator(typingId);
+
+    if (res.ok) {
+      const data = await res.json();
+      addMessage('ai', formatAIResponse(data.content || data.response || ''));
+    } else {
+      const err = await res.json().catch(() => ({}));
+      addMessage('ai', `Lỗi: ${err.error || err.message || `HTTP ${res.status}`}`);
+    }
+  } catch (e) {
+    removeTypingIndicator(typingId);
+    addMessage('ai', 'Không thể kết nối API. Kiểm tra lại URL và CORS settings.');
+  }
+
+  isLoading = false;
+  document.getElementById('sendBtn').disabled = false;
+}
+
+function addMessage(role, content) {
+  const container = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = `msg ${role}`;
+  const avatarText = role === 'ai' ? 'AI' : 'Me';
+  div.innerHTML = `
+    <div class="msg-avatar">${avatarText}</div>
+    <div class="msg-bubble">${role === 'ai' ? content : escapeHtml(content)}</div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function addTypingIndicator() {
+  const container = document.getElementById('chatMessages');
+  const id = 'typing-' + Date.now();
+  const div = document.createElement('div');
+  div.className = 'msg typing';
+  div.id = id;
+  div.innerHTML = `
+    <div class="msg-avatar">AI</div>
+    <div class="msg-bubble">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return id;
+}
+
+function removeTypingIndicator(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function formatAIResponse(text) {
+  return text
+    .replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) => {
+      return `<pre style="background:var(--bg-primary);padding:10px;border-radius:6px;margin:8px 0;font-size:12px;overflow-x:auto">${highlightCode(code.trim())}</pre>`;
+    })
+    .replace(/`([^`]+)`/g, '<code style="background:var(--bg-elevated);padding:1px 5px;border-radius:3px;font-size:12px;color:var(--accent)">$1</code>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+}
+
+function escapeHtml(text) {
+  return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ===== SETTINGS =====
+function openSettings() {
+  const overlay = document.getElementById('settingsOverlay');
+  document.getElementById('apiEndpoint').value = apiBase || 'https://netmaster-api.onrender.com';
+  overlay.classList.add('open');
+}
+
+function closeSettings(e) {
+  if (!e || e.target === document.getElementById('settingsOverlay')) {
+    document.getElementById('settingsOverlay').classList.remove('open');
+  }
+}
+
+async function saveSettings() {
+  const endpoint = document.getElementById('apiEndpoint').value.trim();
+  apiBase = endpoint.replace(/\/$/, '');
+  localStorage.setItem('netmaster_api', apiBase);
+  document.getElementById('settingsOverlay').classList.remove('open');
+  if (apiBase) {
+    await checkConnection();
+  }
+}
+
+async function checkConnection() {
+  const dot = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  try {
+    const res = await fetch(`${apiBase || window.location.origin}/health`);
+    if (res.ok) {
+      dot.className = 'status-dot connected';
+      text.textContent = 'Đã kết nối';
+      isConnected = true;
+    } else {
+      throw new Error();
+    }
+  } catch (e) {
+    dot.className = 'status-dot error';
+    text.textContent = 'Lỗi kết nối';
+    isConnected = false;
+  }
+}
+
+// ===== STATIC LESSON CONTENT =====
+function getStaticContent(id) {
+  const staticLessons = {
+    'csharp-basics': {
+      theory: `<p><strong>C# là ngôn ngữ lập trình hướng đối tượng</strong> do Microsoft phát triển, chạy trên nền tảng .NET cross-platform. C# kết hợp sức mạnh của C++ với sự đơn giản của Visual Basic.</p>
+
+<p><strong>Biến và Kiểu dữ liệu:</strong></p>
+<p>Biến là vùng nhớ lưu trữ dữ liệu. C# là statically typed — kiểu được kiểm tra tại compile time. Các kiểu cơ bản: <code>int</code> (số nguyên 32-bit), <code>long</code> (64-bit), <code>double</code> (số thực), <code>decimal</code> (chính xác cao cho tài chính), <code>bool</code> (true/false), <code>string</code> (chuỗi ký tự).</p>
+
+<p><strong>Cấu trúc điều khiển:</strong></p>
+<p><code>if-else</code> kiểm tra điều kiện. <code>switch-case</code> so khớp giá trị với nhiều trường hợp. Toán tử ba ngôi <code>cond ? a : b</code> viết gọn cho if-else đơn giản.</p>
+
+<p><strong>Vòng lặp:</strong></p>
+<p><code>for</code> — biết trước số lần. <code>while</code> — kiểm tra trước. <code>do-while</code> — luôn chạy ít nhất 1 lần. <code>foreach</code> — duyệt collection an toàn.</p>
+
+<p><strong>Phương thức (Method):</strong></p>
+<p>Khối code có tên, nhận tham số, trả về kết quả. Hỗ trợ <code>named arguments</code>, <code>Optional parameters</code>, <code>ref/out</code> parameters, và <code>tuple</code> trả về nhiều giá trị.</p>`,
+      code: `using System;
+
+namespace CSharpBasics
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // === BIẾN VÀ KIỂU DỮ LIỆU ===
+            int age = 25;
+            long population = 8_000_000_000L;
+            double price = 19.99;
+            decimal salary = 1000.50m;
+            bool isActive = true;
+            char grade = 'A';
+            string name = "C# Developer";
+
+            Console.WriteLine($"Tên: {name}, Tuổi: {age}");
+
+            // === CẤU TRÚC ĐIỀU KHIỂN ===
+            if (age >= 18)
+                Console.WriteLine("Đủ tuổi trưởng thành");
+            else
+                Console.WriteLine("Chưa đủ tuổi");
+
+            string level = age >= 18 ? "Trưởng thành" : "Trẻ em";
+            Console.WriteLine(level);
+
+            // === VÒNG LẶP ===
+            for (int i = 1; i <= 3; i++)
+                Console.WriteLine($"Vòng lặp: {i}");
+
+            string[] fruits = { "Táo", "Cam", "Chuối" };
+            foreach (string fruit in fruits)
+                Console.WriteLine($"Trái cây: {fruit}");
+
+            // === PHƯƠNG THỨC ===
+            int result = Add(10, 20);
+            Console.WriteLine($"Kết quả: {result}");
+        }
+
+        static int Add(int a, int b) => a + b;
+    }
+}`,
+      exercises: [
+        'Tạo biến lưu thông tin cá nhân (tên, tuổi, email)',
+        'Viết chương trình tính tổng các số từ 1 đến 100',
+        'Dùng switch-case xếp loại điểm (A/B/C/D/F)',
+      ]
+    },
+    'csharp-oop': {
+      theory: `<p><strong>Lập trình hướng đối tượng (OOP)</strong> là phương pháp tổ chức code thành các đối tượng, mỗi đối tượng gồm <strong>dữ liệu (fields/properties)</strong> và <strong>hành vi (methods)</strong>.</p>
+
+<p><strong>4 Trụ cột OOP:</strong></p>
+<p><strong>1. Encapsulation (Đóng gói):</strong> Ẩn chi tiết implementation, chỉ expose interface cần thiết. Dùng access modifiers: <code>public</code>, <code>private</code>, <code>protected</code>, <code>internal</code>.</p>
+<p><strong>2. Inheritance (Kế thừa):</strong> Class con thừa hưởng properties và methods từ class cha. Dùng dấu <code>:</code> để kế thừa. C# chỉ hỗ trợ <strong>single inheritance</strong> (1 class kế thừa 1 class).</p>
+<p><strong>3. Polymorphism (Đa hình):</strong> Một đối tượng có nhiều dạng. <strong>Compile-time</strong>: method overloading. <strong>Runtime</strong>: method overriding với <code>virtual</code>/<code>override</code>.</p>
+<p><strong>4. Abstraction (Trừu tượng):</strong> Ẩn complexity, chỉ show essential features. Dùng <code>abstract class</code> và <code>interface</code>.</p>
+
+<p><strong>Class vs Interface:</strong></p>
+<p><code>abstract class</code> — có thể có implementation, hỗ trợ fields, constructor. <code>interface</code> — chỉ khai báo contract, hỗ trợ default implementation (C# 8+), nhiều interface = composition.</p>`,
+      code: `// === INHERITANCE & POLYMORPHISM ===
+public abstract class Animal
+{
+    public string Name { get; set; }
+    public abstract void Speak(); // Abstract method
+}
+
+public class Dog : Animal
+{
+    public override void Speak() => Console.WriteLine($"{Name} says: Gâu gâu!");
+}
+
+public class Cat : Animal
+{
+    public override void Speak() => Console.WriteLine($"{Name} says: Meo meo!");
+}
+
+// === INTERFACE ===
+public interface IFlyable
+{
+    void Fly();
+}
+
+public interface ISwimmable
+{
+    void Swim();
+}
+
+public class Duck : Animal, IFlyable, ISwimmable
+{
+    public override void Speak() => Console.WriteLine($"{Name} says: Quack!");
+
+    public void Fly() => Console.WriteLine($"{Name} is flying");
+    public void Swim() => Console.WriteLine($"{Name} is swimming");
+}
+
+// === ENCAPSULATION ===
+public class BankAccount
+{
+    private decimal _balance; // private field
+
+    public decimal Balance // public property
+    {
+        get => _balance;
+        private set
+        {
+            if (value < 0)
+                throw new ArgumentException("Số dư không thể âm");
+            _balance = value;
+        }
+    }
+
+    public void Deposit(decimal amount)
+    {
+        if (amount <= 0)
+            throw new ArgumentException("Số tiền phải > 0");
+        Balance += amount;
+    }
+}
+
+// Usage
+var account = new BankAccount();
+account.Deposit(1000);
+Console.WriteLine($"Số dư: {account.Balance}");
+// account.Balance = -500; // Lỗi compile!`,
+      exercises: [
+        'Tạo class NhanVien với properties: MaNV, Ten, Luong. Encapsulate field Luong',
+        'Tạo class HinhHoc abstract với method TinhDienTich(), kế thừa HinhTron, HinhChuNhat',
+        'Tạo interface ILogger với method Log(string message), implement FileLogger và DatabaseLogger',
+      ]
+    },
+    'csharp-generics-delegates': {
+      theory: `<p><strong>Generics</strong> cho phép viết code reusable với nhiều kiểu dữ liệu khác nhau, đảm bảo type-safety tại compile time, không cần cast.</p>
+
+<p><strong>Generic Class:</strong> <code>class Repository&lt;T&gt;</code> where T : class, new()</p>
+<p><strong>Generic Method:</strong> <code>T FindById&lt;T&gt;(int id)</code></p>
+<p><strong>Generic Constraints:</strong> <code>where T : class</code> (reference), <code>where T : struct</code> (value), <code>where T : new()</code> (parameterless constructor), <code>where T : BaseClass</code>, <code>where T : IComparable</code></p>
+
+<p><strong>Delegates</strong> là reference type trỏ đến method. Giống function pointer nhưng type-safe. <code>delegate TResult Func&lt;in T, out TResult&gt;(T arg)</code> trả về giá trị. <code>delegate void Action&lt;T&gt;(T arg)</code> không trả về.</p>
+
+<p><strong>Events</strong> là mechanism cho publisher/subscriber pattern. Dùng <code>event</code> keyword để encapsulation, chỉ class đó được raise event.</p>
+
+<p><strong>Multicast Delegates:</strong> Một delegate có thể trỏ đến nhiều methods cùng lúc dùng <code>+=</code>. <code>Action</code> và <code>Func</code> là built-in generic delegates.</p>`,
+      code: `// === GENERICS ===
+public class Box<T>
+{
+    public T Content { get; set; }
+    public override string ToString() => $"Box with: {Content}";
+}
+
+public class Repository<T> where T : class, new()
+{
+    private readonly List<T> _items = new();
+
+    public void Add(T item) => _items.Add(item);
+    public T Get(int id) => _items.ElementAtOrDefault(id);
+    public IEnumerable<T> GetAll() => _items;
+}
+
+// Usage
+var intBox = new Box<int>();
+intBox.Content = 42;
+Console.WriteLine(intBox); // Box with: 42
+
+// === DELEGATES ===
+public delegate int Calculate(int a, int b);
+public delegate void Notify(string message);
+
+// Multicast delegate
+Notify logger = Console.WriteLine;
+logger += msg => Console.WriteLine($"[LOG {DateTime.Now}] {msg}");
+logger("System started"); // Gọi cả 2 handlers
+
+// Built-in delegates
+Func<int, int, int> add = (a, b) => a + b;
+Action<string> print = Console.WriteLine;
+print(add(3, 4).ToString());
+
+// === EVENTS ===
+public class Button
+{
+    public event EventHandler<string> Clicked;
+
+    public void OnClick(string buttonName)
+    {
+        Console.WriteLine($"Button '{buttonName}' clicked!");
+        Clicked?.Invoke(this, buttonName);
+    }
+}
+
+var btn = new Button();
+btn.Clicked += (s, name) => Console.WriteLine($"Handler 1: {name} clicked");
+btn.Clicked += (s, name) => Console.WriteLine($"Handler 2: Received: {name}");
+btn.OnClick("Submit");`,
+      exercises: [
+        'Tạo class Stack<T> với Push, Pop, Peek, Count, IsEmpty',
+        'Viết method Generic Swap<T>(ref T a, ref T b) đổi chỗ 2 biến',
+        'Tạo event Publisher/Subscriber với NotificationService khi có đơn hàng mới',
+      ]
+    },
+    'csharp-linq-collections': {
+      theory: `<p><strong>Collections</strong> trong C# chia thành 2 loại: <strong>Generic</strong> (type-safe, faster) và <strong>Non-generic</strong> (legacy).</p>
+
+<p><strong>Generic Collections:</strong></p>
+<p><code>List&lt;T&gt;</code> — danh sách động, truy cập theo index O(1). <code>Dictionary&lt;TKey, TValue&gt;</code> — cặp key-value, lookup O(1). <code>HashSet&lt;T&gt;</code> — tập hợp unique. <code>Queue&lt;T&gt;</code> — FIFO. <code>Stack&lt;T&gt;</code> — LIFO. <code>SortedDictionary</code> và <code>SortedList</code> — tự động sắp xếp.</p>
+
+<p><strong>LINQ (Language Integrated Query)</strong> cung cấp cú pháp truy vấn dữ liệu nhất quán cho collections, databases, XML. Có 2 syntax: <strong>Query Syntax</strong> (<code>from...where...select</code>) và <strong>Method Syntax</strong> (<code>.Where().Select()</code>).</p>
+
+<p><strong>Các method phổ biến:</strong> <code>Where</code>, <code>Select</code>, <code>OrderBy/OrderByDescending</code>, <code>GroupBy</code>, <code>Join</code>, <code>First/FirstOrDefault</code>, <code>Any/All/Contains</code>, <code>Sum/Count/Average/Min/Max</code>, <code>Skip/Take</code>, <code>Distinct</code>, <code>Union/Intersect/Except</code>.</p>
+
+<p><strong>Deferred execution:</strong> LINQ queries không thực thi ngay — chỉ enumerate khi iterate. Dùng <code>.ToList()</code> hoặc <code>.ToArray()</code> để cache kết quả.</p>`,
+      code: `using System.Linq;
+using System.Collections.Generic;
+
+// === COLLECTIONS ===
+var list = new List<int> { 5, 2, 8, 1, 9, 3 };
+var dict = new Dictionary<string, int>
+{
+    ["Alice"] = 90,
+    ["Bob"] = 85,
+    ["Charlie"] = 92
+};
+
+// === LINQ METHOD SYNTAX ===
+var evens = list.Where(n => n % 2 == 0).ToList();
+// [2, 8]
+
+var sorted = list.OrderByDescending(n => n).ToList();
+// [9, 8, 5, 3, 2, 1]
+
+var top3 = list.OrderByDescending(n => n).Take(3).ToList();
+// [9, 8, 5]
+
+// === LINQ QUERY SYNTAX ===
+var result = from n in list
+             where n > 3
+             orderby n descending
+             select n * 2;
+// IEnumerable<int> { 18, 16, 10, 8 }
+
+// === COMPLEX QUERIES ===
+var students = new[] {
+    new { Name = "Alice", Score = 90, Class = "A" },
+    new { Name = "Bob", Score = 85, Class = "A" },
+    new { Name = "Charlie", Score = 92, Class = "B" }
+};
+
+var classAvg = students
+    .GroupBy(s => s.Class)
+    .Select(g => new {
+        Class = g.Key,
+        Avg = g.Average(s => s.Score),
+        Count = g.Count()
+    })
+    .ToList();
+
+// === AGGREGATE ===
+int sum = list.Sum();
+int count = list.Count;
+double avg = list.Average();
+int max = list.Max();
+int min = list.Min();
+
+// First/FirstOrDefault
+int firstEven = list.First(n => n % 2 == 0); // throws if none
+int firstOdd = list.FirstOrDefault(n => n > 100); // returns default(0) if none
+
+// === DEFERRED VS IMMEDIATE ===
+var query = list.Where(n => n > 5); // Not executed yet
+list.Add(1);
+var result = query.ToList(); // Now executes: [8, 9] (not include 1)`,
+      exercises: [
+        'Tạo danh sách 10 sản phẩm, dùng LINQ lọc sản phẩm giá > 500, sắp xếp giảm dần',
+        'Dùng GroupBy nhóm nhân viên theo phòng ban, tính lương trung bình mỗi phòng',
+        'Viết method mở rộng (extension method) MyWhere và MySelect cho IEnumerable<T>',
+      ]
+    },
+    'csharp-async-await': {
+      theory: `<p><strong>Async/Await</strong> là cú pháp giúp viết code bất đồng bộ (asynchronous) dễ đọc như code đồng bộ. Trước async/await, phải dùng <code>Callback</code> hoặc <code>.ContinueWith()</code> — dễ gây callback hell.</p>
+
+<p><strong>Async Method:</strong> Method có keyword <code>async</code> và trả về <code>Task&lt;T&gt;</code> (có kết quả), <code>Task</code> (không kết quả), hoặc <code>void</code> (chỉ dùng cho event handlers).</p>
+
+<p><strong>Task:</strong> Đại diện cho một operation bất đồng bộ. <code>Task.Run()</code> chạy CPU-bound work trên thread pool. <code>Task.WhenAll()</code> chờ nhiều tasks song song. <code>Task.WhenAny()</code> chờ task đầu tiên hoàn thành.</p>
+
+<p><strong>Anti-patterns cần tránh:</strong> <code>async void</code> (trừ event handlers), <code>.Result</code> và <code>.Wait()</code> (gây deadlock), không dùng <code>Task.Run()</code> trong async library code.</p>
+
+<p><strong>Cancellation:</strong> Dùng <code>CancellationToken</code> để hủy async operation. Truyền token vào async method và kiểm tra <code>.ThrowIfCancellationRequested()</code>.</p>`,
+      code: `// === ASYNC METHOD ===
+public class HttpService
+{
+    private readonly HttpClient _http = new();
+
+    // Async method trả về Task<string>
+    public async Task<string> GetUrlAsync(string url)
+    {
+        // Đợi I/O operation, không block thread
+        var response = await _http.GetStringAsync(url);
+        return response.ToUpper(); // CPU-bound có thể await
+    }
+
+    // Method trả về Task<List<T>>
+    public async Task<List<Product>> GetProductsAsync()
+    {
+        var response = await _http.GetStringAsync("https://api.example.com/products");
+        // Parse JSON và return
+        return new List<Product>();
+    }
+}
+
+// === CALLING ASYNC METHODS ===
+var service = new HttpService();
+
+// Sequential - tổng thời gian = t1 + t2
+string r1 = await service.GetUrlAsync("https://api1.com");
+string r2 = await service.GetUrlAsync("https://api2.com");
+
+// Parallel - tổng thời gian = max(t1, t2)
+var task1 = service.GetUrlAsync("https://api1.com");
+var task2 = service.GetUrlAsync("https://api2.com");
+await Task.WhenAll(task1, task2);
+var results = new[] { task1.Result, task2.Result };
+
+// === CANCELLATION ===
+public async Task<string> DownloadWithCancelAsync(
+    CancellationToken ct)
+{
+    using var client = new HttpClient();
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://api.example.com");
+        var response = await client.SendAsync(request, ct);
+        // Kiểm tra cancellation
+        ct.ThrowIfCancellationRequested();
+        return await response.Content.ReadAsStringAsync(ct);
+    }
+}
+
+// Usage
+using var cts = new CancellationTokenSource();
+cts.CancelAfter(TimeSpan.FromSeconds(10)); // Timeout 10s
+
+try
+{
+    var result = await DownloadWithCancelAsync(cts.Token);
+}
+catch (OperationCanceledException)
+{
+    Console.WriteLine("Request bị hủy hoặc timeout");
+}
+
+// === CONFIGUREAWAIT ===
+// Trong library code, dùng ConfigureAwait(false) để tránh deadlock
+public async Task<string> GetDataAsync()
+{
+    using var client = new HttpClient();
+    var data = await client.GetStringAsync("https://api.example.com")
+                           .ConfigureAwait(false);
+    return ProcessData(data); // Tiếp tục trên thread pool
+}`,
+      exercises: [
+        'Viết async method đọc file text, xử lý async/await với try-catch',
+        'Dùng Task.WhenAll gọi 3 API song song, đo thời gian so với gọi tuần tự',
+        'Tạo Retry logic với exponential backoff cho async method',
+      ]
+    },
+    'dotnet-ecosystem-nuget': {
+      theory: `<p><strong>.NET Ecosystem</strong> bao gồm: <strong>.NET Framework</strong> (Windows-only, legacy), <strong>.NET Core</strong> (cross-platform, open-source), và <strong>.NET 5+</strong> (unified platform). Hiện tại dùng .NET 8 LTS.</p>
+
+<p><strong>.csproj file</strong> là trái tim của .NET project. Chứa: target framework (<code>net8.0</code>), package references (<code>PackageReference</code>), project settings, build configuration.</p>
+
+<p><strong>NuGet</strong> là package manager cho .NET. Các packages phổ biến: <code>Newtonsoft.Json</code>/<code>System.Text.Json</code> (JSON), <code>Dapper</code>/<code>EF Core</code> (ORM), <code>xUnit</code>/<code>NUnit</code>/<code>MSTest</code> (testing), <code>Serilog</code>/<code>NLog</code> (logging), <code>FluentValidation</code> (validation), <code>AutoMapper</code> (object mapping).</p>
+
+<p><strong>CLI commands:</strong> <code>dotnet new</code> (tạo project), <code>dotnet build</code>, <code>dotnet run</code>, <code>dotnet test</code>, <code>dotnet publish</code>, <code>dotnet add package</code>, <code>dotnet restore</code>.</p>
+
+<p><strong>Dependency Injection container</strong> tích hợp sẵn trong .NET Core/ASP.NET Core. Đăng ký services bằng <code>services.AddScoped&lt;IService, Service&gt;()</code> trong <code>Program.cs</code>.</p>`,
+      code: `// === .CSPROJ EXAMPLE ===
+// <Project Sdk="Microsoft.NET.Sdk.Web">
+//   <PropertyGroup>
+//     <TargetFramework>net8.0</TargetFramework>
+//     <Nullable>enable</Nullable>
+//     <ImplicitUsings>enable</ImplicitUsings>
+//   </PropertyGroup>
+//   <ItemGroup>
+//     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
+//     <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
+//     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+//   </ItemGroup>
+// </Project>
+
+// === CLI COMMANDS ===
+// dotnet new webapi -n MyApi
+// dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+// dotnet build
+// dotnet run --urls "http://localhost:5000"
+// dotnet test --verbosity normal
+// dotnet publish -c Release -r linux-x64 --self-contained
+
+// === DEPENDENCY INJECTION ===
+// Program.cs
+var builder = WebApplication.CreateBuilder(args);
+
+// Register services
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddSingleton<ISettings, AppSettings>();
+builder.Services.AddTransient<IValidator<ProductDto>, ProductValidator>();
+
+// Add framework services
+builder.Services.AddControllers();
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
+
+var app = builder.Build();
+
+// Resolve from DI container
+using (var scope = app.Services.CreateScope())
+{
+    var repo = scope.ServiceProvider.GetRequiredService<IProductRepository>();
+    var products = await repo.GetAllAsync();
+}
+
+// === LAUNCH PROFILE (.vs/launchSettings.json) ===
+// {
+//   "profiles": {
+//     "MyApi": {
+//       "commandName": "Project",
+//       "dotnetRunMessages": true,
+//       "launchBrowser": true,
+//       "applicationUrl": "https://localhost:5001;http://localhost:5000"
+//     }
+//   }
+// }`,
+      exercises: [
+        'Tạo .NET 8 Web API project bằng CLI, thêm 2 packages, build thành công',
+        'Đăng ký 3 services với 3 lifetimes khác nhau (Singleton/Scoped/Transient)',
+        'Cấu hình Serilog ghi log ra console và file cùng lúc',
+      ]
+    },
+  };
+
+  // Default fallback for lessons not in static content
+  const defaults = {
+    theory: `<p>Bài học này đang được cập nhật nội dung. Hãy hỏi AI Tutor để được giải thích chi tiết!</p>`,
+    code: `// Nội dung đang được cập nhật\n// Hỏi AI Tutor để được hướng dẫn`,
+    exercises: [
+      'Nghiên cứu tài liệu và thực hành theo hướng dẫn của AI Tutor',
+      'Tự tạo project và thử nghiệm concepts đã học',
+    ]
+  };
+
+  return staticLessons[id] || {
+    theory: defaults.theory,
+    code: defaults.code,
+    exercises: defaults.exercises
+  };
+}
+</script>
+</body>
+</html>
